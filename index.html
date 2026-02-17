@@ -19,7 +19,13 @@
       }
 
       body {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+        font-family:
+          "Inter",
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          Roboto,
+          sans-serif;
         background: var(--bg-light);
         margin: 0;
         padding: 0;
@@ -42,7 +48,9 @@
         display: flex;
         flex-direction: column;
         overflow-y: auto;
-        transition: transform 0.3s ease, width 0.3s ease;
+        transition:
+          transform 0.3s ease,
+          width 0.3s ease;
         z-index: 1000;
       }
       .side-panel.right {
@@ -75,10 +83,20 @@
       .resource-card:hover {
         border-color: var(--marion-blue);
         transform: translateY(-2px);
-        box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
       }
-      .resource-name { font-weight: 700; font-size: 13px; color: var(--marion-blue); display: block; }
-      .resource-info { font-size: 11px; color: #666; margin-top: 4px; display: block; }
+      .resource-name {
+        font-weight: 700;
+        font-size: 13px;
+        color: var(--marion-blue);
+        display: block;
+      }
+      .resource-info {
+        font-size: 11px;
+        color: #666;
+        margin-top: 4px;
+        display: block;
+      }
 
       /* History Items */
       .history-item {
@@ -88,9 +106,18 @@
         transition: background 0.2s;
         font-size: 12px;
       }
-      .history-item:hover { background: #f0f7ff; }
-      .history-date { font-size: 10px; color: #999; }
-      .history-title { font-weight: bold; color: var(--marion-blue); display: block; }
+      .history-item:hover {
+        background: #f0f7ff;
+      }
+      .history-date {
+        font-size: 10px;
+        color: #999;
+      }
+      .history-title {
+        font-weight: bold;
+        color: var(--marion-blue);
+        display: block;
+      }
 
       /* Main Workspace */
       .main-workspace {
@@ -108,8 +135,17 @@
         border-bottom: 2px solid var(--bg-light);
         gap: 15px;
       }
-      .header-left { display: flex; align-items: center; gap: 15px; }
-      .app-header h1 { margin: 0; font-size: 24px; color: var(--marion-blue); font-weight: 800; }
+      .header-left {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+      }
+      .app-header h1 {
+        margin: 0;
+        font-size: 24px;
+        color: var(--marion-blue);
+        font-weight: 800;
+      }
 
       /* Hamburger Menu Styling */
       .menu-btn {
@@ -125,7 +161,9 @@
         border-radius: 6px;
         transition: background 0.2s;
       }
-      .menu-btn:hover { background: #f0f4f8; }
+      .menu-btn:hover {
+        background: #f0f4f8;
+      }
 
       .privacy-banner {
         display: flex;
@@ -160,18 +198,33 @@
         border-bottom: 2px solid var(--gold);
         padding-bottom: 10px;
       }
-      
+
       .form-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
         gap: 20px;
       }
-      .field-group { display: flex; flex-direction: column; }
-      .field-group.full { grid-column: span 3; }
-      .field-group.half { grid-column: span 2; }
-      
-      label { font-size: 11px; font-weight: 700; margin-bottom: 8px; color: #666; text-transform: uppercase; }
-      input, select, textarea {
+      .field-group {
+        display: flex;
+        flex-direction: column;
+      }
+      .field-group.full {
+        grid-column: span 3;
+      }
+      .field-group.half {
+        grid-column: span 2;
+      }
+
+      label {
+        font-size: 11px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: #666;
+        text-transform: uppercase;
+      }
+      input,
+      select,
+      textarea {
         padding: 12px;
         border: 2px solid #edf2f7;
         border-radius: 8px;
@@ -179,8 +232,16 @@
         transition: border-color 0.2s;
         font-family: inherit;
       }
-      textarea { resize: vertical; min-height: 80px; }
-      input:focus, select:focus, textarea:focus { border-color: var(--marion-blue); outline: none; }
+      textarea {
+        resize: vertical;
+        min-height: 80px;
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: var(--marion-blue);
+        outline: none;
+      }
 
       /* Tabs for Navigation (Optional Enhancement) */
       .nav-tabs {
@@ -200,7 +261,10 @@
         font-weight: 700;
         white-space: nowrap;
       }
-      .tab-btn.active { background: var(--marion-blue); color: white; }
+      .tab-btn.active {
+        background: var(--marion-blue);
+        color: white;
+      }
 
       /* Output Area */
       .output-section {
@@ -216,11 +280,15 @@
         color: var(--text-main);
         min-height: 200px;
         margin-bottom: 25px;
-        font-family: 'Georgia', serif;
+        font-family: "Georgia", serif;
         line-height: 1.6;
       }
 
-      .btn-bar { display: flex; gap: 12px; flex-wrap: wrap; }
+      .btn-bar {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+      }
       .btn {
         padding: 12px 24px;
         border: none;
@@ -234,18 +302,64 @@
         justify-content: center;
         gap: 8px;
       }
-      .btn-primary { background: var(--marion-blue); color: white; }
-      .btn-success { background: var(--success); color: white; }
-      .btn-outline { background: transparent; border: 2px solid var(--border); color: #666; }
-      .btn:hover { opacity: 0.9; transform: translateY(-1px); }
+      .btn-primary {
+        background: var(--marion-blue);
+        color: white;
+      }
+      .btn-success {
+        background: var(--success);
+        color: white;
+      }
+      .btn-outline {
+        background: transparent;
+        border: 2px solid var(--border);
+        color: #666;
+      }
+      .btn:hover {
+        opacity: 0.9;
+        transform: translateY(-1px);
+      }
 
       /* Switch */
-      .switch { position: relative; display: inline-block; width: 44px; height: 22px; }
-      .switch input { opacity: 0; width: 0; height: 0; }
-      .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e0; transition: .4s; border-radius: 34px; }
-      input:checked + .slider { background-color: var(--gold); }
-      .slider:before { position: absolute; content: ""; height: 16px; width: 16px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; }
-      input:checked + .slider:before { transform: translateX(22px); }
+      .switch {
+        position: relative;
+        display: inline-block;
+        width: 44px;
+        height: 22px;
+      }
+      .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #cbd5e0;
+        transition: 0.4s;
+        border-radius: 34px;
+      }
+      input:checked + .slider {
+        background-color: var(--gold);
+      }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 16px;
+        width: 16px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
+      input:checked + .slider:before {
+        transform: translateX(22px);
+      }
 
       /* Desktop Scaling */
       .app-container.sidebar-collapsed {
@@ -258,39 +372,87 @@
 
       /* Responsive */
       @media (max-width: 1024px) {
-        .app-container { grid-template-columns: 0px 1fr; }
-        .side-panel:first-child { position: fixed; top: 0; left: 0; bottom: 0; width: 280px; transform: translateX(-100%); visibility: hidden; z-index: 2000; }
-        .sidebar-active .side-panel:first-child { transform: translateX(0); visibility: visible; }
-        .side-panel.right { display: none; }
-        .form-grid { grid-template-columns: 1fr 1fr; }
+        .app-container {
+          grid-template-columns: 0px 1fr;
+        }
+        .side-panel:first-child {
+          position: fixed;
+          top: 0;
+          left: 0;
+          bottom: 0;
+          width: 280px;
+          transform: translateX(-100%);
+          visibility: hidden;
+          z-index: 2000;
+        }
+        .sidebar-active .side-panel:first-child {
+          transform: translateX(0);
+          visibility: visible;
+        }
+        .side-panel.right {
+          display: none;
+        }
+        .form-grid {
+          grid-template-columns: 1fr 1fr;
+        }
       }
       @media (max-width: 768px) {
-        .form-grid { grid-template-columns: 1fr; }
-        .field-group.full, .field-group.half { grid-column: span 1; }
-        .main-workspace { padding: 20px; }
+        .form-grid {
+          grid-template-columns: 1fr;
+        }
+        .field-group.full,
+        .field-group.half {
+          grid-column: span 1;
+        }
+        .main-workspace {
+          padding: 20px;
+        }
       }
 
       .sidebar-overlay {
         display: none;
         position: fixed;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: rgba(0,0,0,0.3);
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.3);
         z-index: 1500;
       }
-      .sidebar-active .sidebar-overlay { display: block; }
+      .sidebar-active .sidebar-overlay {
+        display: block;
+      }
 
       @media print {
-        .side-panel, .btn-bar, .privacy-banner, .form-section, .nav-tabs, .app-header, .sidebar-overlay { display: none !important; }
-        .main-workspace { padding: 0; width: 100%; }
-        .output-section { border: none; background: white; padding: 0; margin-top: 0; }
-        #narrativeDisplay { font-size: 11pt; color: black; }
+        .side-panel,
+        .btn-bar,
+        .privacy-banner,
+        .form-section,
+        .nav-tabs,
+        .app-header,
+        .sidebar-overlay {
+          display: none !important;
+        }
+        .main-workspace {
+          padding: 0;
+          width: 100%;
+        }
+        .output-section {
+          border: none;
+          background: white;
+          padding: 0;
+          margin-top: 0;
+        }
+        #narrativeDisplay {
+          font-size: 11pt;
+          color: black;
+        }
       }
     </style>
   </head>
   <body>
     <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
     <div class="app-container" id="appContainer">
-      
       <!-- Left Sidebar -->
       <aside class="side-panel">
         <div class="panel-header">Marion County Resources</div>
@@ -301,49 +463,110 @@
       <main class="main-workspace">
         <div class="app-header">
           <div class="header-left">
-            <button class="menu-btn" onclick="toggleSidebar()" title="Toggle Resources">☰</button>
-            <h1>ISP Assistant <span style="font-weight: 300; color: var(--gold);">Pro</span></h1>
+            <button
+              class="menu-btn"
+              onclick="toggleSidebar()"
+              title="Toggle Resources"
+            >
+              ☰
+            </button>
+            <h1>
+              ISP Assistant
+              <span style="font-weight: 300; color: var(--gold)">Pro</span>
+            </h1>
           </div>
           <div class="btn-bar">
-            <button class="btn btn-outline" onclick="resetForm()">New Plan</button>
+            <button class="btn btn-outline" onclick="resetForm()">
+              New Plan
+            </button>
           </div>
         </div>
 
         <div class="privacy-banner">
-          <span>🔒 HIPAA PRIVACY MODE: [ON] Mask sensitive data while drafting.</span>
+          <span
+            >🔒 HIPAA PRIVACY MODE: [ON] Mask sensitive data while
+            drafting.</span
+          >
           <label class="switch">
-            <input type="checkbox" id="privacyToggle" checked onchange="updateUI()">
+            <input
+              type="checkbox"
+              id="privacyToggle"
+              checked
+              onchange="updateUI()"
+            />
             <span class="slider"></span>
           </label>
         </div>
 
         <!-- 1. Demographic & Contributor Information -->
         <div class="form-section" id="sec-demographics">
-          <div class="section-title"><span>1</span> Demographic & Planning Details</div>
+          <div class="section-title">
+            <span>1</span> Demographic & System Integration
+          </div>
           <div class="form-grid">
             <div class="field-group">
               <label>Full Legal Name</label>
-              <input type="text" id="clientName" placeholder="John Doe" oninput="updateUI()">
+              <input
+                type="text"
+                id="clientName"
+                placeholder="John Doe"
+                oninput="updateUI()"
+              />
             </div>
             <div class="field-group">
               <label>Date of Birth</label>
-              <input type="date" id="clientDOB" oninput="updateUI()">
+              <input type="date" id="clientDOB" oninput="updateUI()" />
             </div>
             <div class="field-group">
               <label>DMH ID Number</label>
-              <input type="text" id="dmhID" placeholder="7 digits" oninput="updateUI()">
+              <input
+                type="text"
+                id="dmhID"
+                placeholder="7 digits"
+                oninput="updateUI()"
+              />
             </div>
             <div class="field-group">
               <label>ISP Implementation Date</label>
-              <input type="date" id="ispDate" oninput="updateUI()">
+              <input type="date" id="ispDate" oninput="updateUI()" />
+            </div>
+            <div class="field-group">
+              <label>MOEDIWEB Updated Date</label>
+              <input type="date" id="moediDate" oninput="updateUI()" />
+            </div>
+            <div class="field-group">
+              <label>CIMOR Updated Date</label>
+              <input type="date" id="cimorDate" oninput="updateUI()" />
+            </div>
+            <div class="field-group">
+              <label>Last Assessment Date</label>
+              <input type="date" id="lastAssessment" oninput="updateUI()" />
+            </div>
+            <div class="field-group">
+              <label>Last LOC Date</label>
+              <input type="date" id="lastLOC" oninput="updateUI()" />
+            </div>
+            <div class="field-group">
+              <label>RAS or SIS Score</label>
+              <input
+                type="text"
+                id="rasSisScore"
+                placeholder="Score (or 'None')"
+                oninput="updateUI()"
+              />
             </div>
             <div class="field-group">
               <label>TCM Agency / Coordinator</label>
-              <input type="text" id="coordinator" placeholder="Marion Co. Services Board" oninput="updateUI()">
+              <input
+                type="text"
+                id="coordinator"
+                placeholder="Marion Co. Services Board"
+                oninput="updateUI()"
+              />
             </div>
             <div class="field-group">
               <label>Healthcare Resources</label>
-              <select id="insurance">
+              <select id="insurance" onchange="updateUI()">
                 <option value="Medicaid">Medicaid (MO HealthNet)</option>
                 <option value="Medicare">Medicare</option>
                 <option value="Private Insurance">Private Insurance</option>
@@ -359,22 +582,62 @@
           <div class="form-grid">
             <div class="field-group full">
               <label>Personal Aspirations (Future Hopes & Dreams)</label>
-              <textarea id="aspirations" placeholder="What does a 'Good Life' look like for this individual?"></textarea>
+              <textarea
+                id="aspirations"
+                placeholder="What does a 'Good Life' look like for this individual? (Include their own words)"
+                oninput="updateUI()"
+              ></textarea>
             </div>
             <div class="field-group full">
-              <label>Strengths & Assets (Abilities & Technology)</label>
-              <textarea id="strengths" placeholder="E.g. Friendly, uses iPad for communication, strong walker..."></textarea>
+              <label>Previous Goals Progress (Summary of last year)</label>
+              <textarea
+                id="prevGoals"
+                placeholder="Discuss progress/lack of progress on previous ISP goals. Mention if mastered or discontinued."
+                oninput="updateUI()"
+              ></textarea>
             </div>
             <div class="field-group full">
-              <label>Support Preferences (Likes/Dislikes)</label>
-              <textarea id="preferences" placeholder="E.g. Prefers female providers, dislikes loud noises..."></textarea>
+              <label>Strengths & Assets (Skills, Abilities, Passions)</label>
+              <textarea
+                id="strengths"
+                placeholder="E.g. Friendly, uses iPad for communication, strong walker... relation to goals?"
+                oninput="updateUI()"
+              ></textarea>
+            </div>
+            <div class="field-group half">
+              <label>Technology Helpers</label>
+              <input
+                type="text"
+                id="techHelpers"
+                placeholder="Apps, tablets, adaptive utensils, etc."
+                oninput="updateUI()"
+              />
+            </div>
+            <div class="field-group half">
+              <label>Relationships (Family, Friends, Natural Supports)</label>
+              <input
+                type="text"
+                id="relationships"
+                placeholder="Who helps achieve these goals?"
+                oninput="updateUI()"
+              />
+            </div>
+            <div class="field-group full">
+              <label>Community Resources (Clubs, Library, Job Centers)</label>
+              <textarea
+                id="communityResources"
+                placeholder="Clubs, Vocational Rehab, Centers for Independent Living..."
+                oninput="updateUI()"
+              ></textarea>
             </div>
           </div>
         </div>
 
         <!-- 3. Support Needs & Risk Planning -->
         <div class="form-section" id="sec-health">
-          <div class="section-title"><span>3</span> Health, Safety & Risk Planning</div>
+          <div class="section-title">
+            <span>3</span> Health, Safety & Risk Planning
+          </div>
           <div class="form-grid">
             <div class="field-group">
               <label>Provider Risk Level</label>
@@ -384,60 +647,168 @@
                 <option value="High (Behavioral)">High Risk</option>
               </select>
             </div>
+            <div class="field-group">
+              <label>Supervision Level</label>
+              <select id="supervisionLevel" onchange="updateUI()">
+                <option value="Standard">Standard</option>
+                <option value="Line of Sight">Line of Sight</option>
+                <option value="1:1 Constant">1:1 Constant</option>
+                <option value="Altered (See Notes)">Altered Protocol</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label>Behavioral Support</label>
+              <select id="behavioralStatus" onchange="updateUI()">
+                <option value="None">None Needed</option>
+                <option value="FBA in Progress">FBA in Progress</option>
+                <option value="BSP Active">BSP Active</option>
+                <option value="ATSC Involved">ATSC Involved</option>
+              </select>
+            </div>
             <div class="field-group half">
               <label>Staff Precaution (OSHA 3148)</label>
               <select id="oshaPrecaution" onchange="updateUI()">
-                <option value="Standard universal precautions apply.">Standard Precautions</option>
-                <option value="Two-staff escort required for community.">2-Staff Escort Protocol</option>
-                <option value="Staff to maintain clear path to exit.">Environmental Awareness</option>
-                <option value="Utilize de-escalation (Mandt/NCI).">De-escalation Protocol</option>
+                <option value="Standard universal precautions apply.">
+                  Standard Precautions
+                </option>
+                <option value="Two-staff escort required for community.">
+                  2-Staff Escort Protocol
+                </option>
+                <option value="Staff to maintain clear path to exit.">
+                  Environmental Awareness
+                </option>
+                <option value="Utilize de-escalation (Mandt/NCI).">
+                  De-escalation Protocol
+                </option>
               </select>
             </div>
             <div class="field-group full">
-              <label>Medication & Dietary Support</label>
-              <textarea id="medSupport" placeholder="List medications or specific diet needs (e.g. Mechanical Soft)."></textarea>
+              <label>Medication, Dietary & Mobility Risks</label>
+              <textarea
+                id="medSupport"
+                placeholder="List medications, diet (e.g. Mechanical Soft/Choking Risk), and mobility needs (e.g. Falls risk)."
+                oninput="updateUI()"
+              ></textarea>
             </div>
             <div class="field-group full">
-              <label>Emergency Evacuation Plan</label>
-              <input type="text" id="evacPlan" placeholder="E.g. Independent exit, 1:1 assist to safety spot.">
+              <label>Emergency Evacuation & 911 Support</label>
+              <input
+                type="text"
+                id="evacPlan"
+                placeholder="E.g. Independent exit, 1:1 assist, ability to call 911."
+                oninput="updateUI()"
+              />
             </div>
           </div>
         </div>
 
         <!-- 4. Legal & Rights -->
         <div class="form-section" id="sec-legal">
-          <div class="section-title"><span>4</span> Legal & Rights Information</div>
+          <div class="section-title">
+            <span>4</span> Legal, Rights & Satisfaction
+          </div>
           <div class="form-grid">
             <div class="field-group">
               <label>Legal Status</label>
-              <select id="legalStatus">
+              <select id="legalStatus" onchange="updateUI()">
                 <option value="Self / Full Rights">Self / Full Rights</option>
                 <option value="Full Guardianship">Full Guardianship</option>
-                <option value="Limited Guardianship">Limited Guardianship</option>
+                <option value="Limited Guardianship">
+                  Limited Guardianship
+                </option>
                 <option value="Power of Attorney">Power of Attorney</option>
               </select>
             </div>
             <div class="field-group">
-              <label>Choice of Provider Offered?</label>
-              <select id="choiceOffered">
-                <option value="Yes">Yes</option>
+              <label>Rights Brochure Addressed?</label>
+              <select id="rightsBrochure" onchange="updateUI()">
+                <option value="Yes">Yes - Knowing Your Rights</option>
                 <option value="No">No</option>
-                <option value="N/A">N/A</option>
               </select>
             </div>
             <div class="field-group">
               <label>Consents on File?</label>
-              <select id="consents">
+              <select id="consents" onchange="updateUI()">
                 <option value="Yes - All signed">Yes - All signed</option>
                 <option value="Pending">Pending</option>
+              </select>
+            </div>
+            <div class="field-group full">
+              <label>Satisfaction with Services (Spelled out by service)</label>
+              <textarea
+                id="serviceSatisfaction"
+                placeholder="E.g. Individual is satisfied with TCM, Community Health, and MCSDD Grant programs."
+                oninput="updateUI()"
+              ></textarea>
+            </div>
+            <div class="field-group full">
+              <label>Conflict of Interest Info Provided?</label>
+              <select id="conflictInfo" onchange="updateUI()">
+                <option value="Yes">Yes - Clear information provided</option>
+                <option value="No">No</option>
               </select>
             </div>
           </div>
         </div>
 
-        <!-- 5. Outcomes Generator -->
+        <!-- 5. Contributors & Administration -->
+        <div class="form-section" id="sec-admin">
+          <div class="section-title">
+            <span>5</span> Contributors & Administration
+          </div>
+          <div class="form-grid">
+            <div class="field-group full">
+              <label>Plan Contributors (Who was involved?)</label>
+              <input
+                type="text"
+                id="contributors"
+                placeholder="E.g. Individual, Guardian, SC, Provider Name..."
+                oninput="updateUI()"
+              />
+            </div>
+            <div class="field-group full">
+              <label>Participation Statement</label>
+              <textarea
+                id="participation"
+                placeholder="How did the individual participate? If not present, provide justification."
+                oninput="updateUI()"
+              ></textarea>
+            </div>
+            <div class="field-group">
+              <label>SC Visit Frequency</label>
+              <input
+                type="text"
+                id="scFrequency"
+                placeholder="E.g. Face-to-face monthly"
+                oninput="updateUI()"
+              />
+            </div>
+            <div class="field-group">
+              <label>Payee / Monthly Spending Info</label>
+              <input
+                type="text"
+                id="payeeInfo"
+                placeholder="If HSO is payee, discuss spending info."
+                oninput="updateUI()"
+              />
+            </div>
+            <div class="field-group">
+              <label>Burial Info (Placement only)</label>
+              <input
+                type="text"
+                id="burialInfo"
+                placeholder="Address if applicable"
+                oninput="updateUI()"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- 6. Outcomes Generator -->
         <div class="form-section" id="sec-outcomes">
-          <div class="section-title"><span>5</span> Measurable Outcomes Generator</div>
+          <div class="section-title">
+            <span>6</span> Measurable Outcomes Generator
+          </div>
           <div class="form-grid">
             <div class="field-group">
               <label>Outcome Domain</label>
@@ -452,16 +823,31 @@
             <div class="field-group">
               <label>Support Method</label>
               <select id="verb" onchange="updateUI()">
-                <option value="instructional support to learn how to">Instructional (Teaching)</option>
-                <option value="maintenance support to continue to">Maintenance (Sharpness)</option>
-                <option value="physical and direct support to">Physical/Direct (Hands-on)</option>
-                <option value="modeling and demonstration to">Model (Show/Tell)</option>
-                <option value="verbal prompts and cues to">Prompt (Reminders)</option>
+                <option value="instructional support to learn how to">
+                  Instructional (Teaching)
+                </option>
+                <option value="maintenance support to continue to">
+                  Maintenance (Sharpness)
+                </option>
+                <option value="physical and direct support to">
+                  Physical/Direct (Hands-on)
+                </option>
+                <option value="modeling and demonstration to">
+                  Model (Show/Tell)
+                </option>
+                <option value="verbal prompts and cues to">
+                  Prompt (Reminders)
+                </option>
               </select>
             </div>
             <div class="field-group">
               <label>Frequency</label>
-              <input type="text" id="frequency" placeholder="e.g. 3x weekly" oninput="updateUI()">
+              <input
+                type="text"
+                id="frequency"
+                placeholder="e.g. 3x weekly"
+                oninput="updateUI()"
+              />
             </div>
             <div class="field-group full">
               <label>Goal Starter (Clinical Building Blocks)</label>
@@ -472,12 +858,25 @@
 
         <!-- Final Export Area -->
         <div class="output-section">
-          <div class="section-title" style="color: var(--marion-blue); border-color: var(--marion-blue);">ISP DOCUMENT PREVIEW</div>
-          <div id="narrativeDisplay">Complete sections to generate the full Missouri ISP summary...</div>
+          <div
+            class="section-title"
+            style="color: var(--marion-blue); border-color: var(--marion-blue)"
+          >
+            ISP DOCUMENT PREVIEW
+          </div>
+          <div id="narrativeDisplay">
+            Complete sections to generate the full Missouri ISP summary...
+          </div>
           <div class="btn-bar">
-            <button class="btn btn-primary" onclick="copyToClipboard()">📋 Copy Summary</button>
-            <button class="btn btn-success" onclick="window.print()">🖨️ Export PDF / Print</button>
-            <button class="btn btn-outline" onclick="saveToHistory()">💾 Save Draft</button>
+            <button class="btn btn-primary" onclick="copyToClipboard()">
+              📋 Copy Summary
+            </button>
+            <button class="btn btn-success" onclick="window.print()">
+              🖨️ Export PDF / Print
+            </button>
+            <button class="btn btn-outline" onclick="saveToHistory()">
+              💾 Save Draft
+            </button>
           </div>
         </div>
       </main>
@@ -497,34 +896,50 @@
           "exit the home and meet staff at the designated 'Safety Spot'",
           "demonstrate the ability to call 911 and provide their home address",
           "utilize a 'Safety Tool' (e.g., cell phone) to reach support",
-          "independently identify 2 exits in any community building"
+          "independently identify 2 exits in any community building",
         ],
         Daily: [
           "identify 3 local businesses of interest for future employment",
           "participate in their annual ISP meeting and express 1 choice",
           "review their monthly ledger with staff assistance",
           "practice 3 interview questions with staff",
-          "lead at least one section of their ISP meeting"
+          "lead at least one section of their ISP meeting",
         ],
         Community: [
           "initiate 1 conversation with a peer during a community outing",
           "navigate to 2 locations in Hannibal (e.g., Library, Admiral Coontz Center)",
           "use OATS transit to attend a local social event",
-          "participate in 1 volunteer activity at a Marion County park"
+          "participate in 1 volunteer activity at a Marion County park",
         ],
         Health: [
           "choose a healthy snack option with 1 verbal prompt",
           "participate in 20 minutes of physical activity (e.g., Riverview Park)",
           "identify the name and purpose of their morning medications",
-          "assist in the preparation of one healthy meal per week"
+          "assist in the preparation of one healthy meal per week",
         ],
       };
 
       const resources = [
-        { name: "Mark Twain Behavioral Health", info: "Crisis: (800) 356-5395", contact: "Hannibal Office" },
-        { name: "Douglass Community Services", info: "Food/Utility Assistance", contact: "573-221-3892" },
-        { name: "OATS Transit", info: "Transportation Marion Co.", contact: "800-269-6287" },
-        { name: "NECAC Marion County", info: "Housing & Support", contact: "573-221-7166" }
+        {
+          name: "Mark Twain Behavioral Health",
+          info: "Crisis: (800) 356-5395",
+          contact: "Hannibal Office",
+        },
+        {
+          name: "Douglass Community Services",
+          info: "Food/Utility Assistance",
+          contact: "573-221-3892",
+        },
+        {
+          name: "OATS Transit",
+          info: "Transportation Marion Co.",
+          contact: "800-269-6287",
+        },
+        {
+          name: "NECAC Marion County",
+          info: "Housing & Support",
+          contact: "573-221-7166",
+        },
       ];
 
       function init() {
@@ -534,68 +949,87 @@
       }
 
       function toggleSidebar() {
-        const container = document.getElementById('appContainer');
+        const container = document.getElementById("appContainer");
         if (window.innerWidth <= 1024) {
-          document.body.classList.toggle('sidebar-active');
+          document.body.classList.toggle("sidebar-active");
         } else {
-          container.classList.toggle('sidebar-collapsed');
+          container.classList.toggle("sidebar-collapsed");
         }
       }
 
       function renderResources() {
-        document.getElementById('resourceList').innerHTML = resources.map(res => `
+        document.getElementById("resourceList").innerHTML = resources
+          .map(
+            (res) => `
           <div class="resource-card" onclick="injectResource('${res.name}')">
             <span class="resource-name">${res.name}</span>
             <span class="resource-info">${res.info} | ${res.contact}</span>
           </div>
-        `).join('');
+        `,
+          )
+          .join("");
       }
 
       function loadTemplates() {
         const d = document.getElementById("domain").value;
         const selector = document.getElementById("goalTemplate");
-        selector.innerHTML = d ? data[d].map(item => `<option value="${item}">${item}</option>`).join('') : '<option>-- Select Domain First --</option>';
+        selector.innerHTML = d
+          ? data[d]
+              .map((item) => `<option value="${item}">${item}</option>`)
+              .join("")
+          : "<option>-- Select Domain First --</option>";
         updateUI();
       }
 
       function updateUI() {
         const isPrivacyOn = document.getElementById("privacyToggle").checked;
         const getVal = (id) => document.getElementById(id).value;
-        
-        const name = isPrivacyOn ? "[INDIVIDUAL]" : (getVal("clientName") || "[NAME]");
-        const dob = isPrivacyOn ? "[MM/DD/YYYY]" : (getVal("clientDOB") || "N/A");
-        const dmhID = isPrivacyOn ? "[XXXXXXX]" : (getVal("dmhID") || "N/A");
-        
-        const verb = getVal("verb");
-        const goal = getVal("goalTemplate");
-        const freq = getVal("frequency") || "[FREQUENCY]";
-        const risk = getVal("riskLevel");
-        const osha = getVal("oshaPrecaution");
+
+        const name = isPrivacyOn
+          ? "[INDIVIDUAL]"
+          : getVal("clientName") || "[NAME]";
+        const dob = isPrivacyOn ? "[MM/DD/YYYY]" : getVal("clientDOB") || "N/A";
+        const dmhID = isPrivacyOn ? "[XXXXXXX]" : getVal("dmhID") || "N/A";
 
         let text = `MISSOURI INDIVIDUAL SUPPORT PLAN (ISP) SUMMARY\n`;
         text += `==========================================\n\n`;
-        text += `1. DEMOGRAPHICS & PLANNING\n`;
+        
+        text += `1. DEMOGRAPHICS & SYSTEM INTEGRATION\n`;
         text += `Name: ${name} | DOB: ${dob} | DMH ID: ${dmhID}\n`;
-        text += `Coordinator: ${getVal("coordinator") || "N/A"} | Date: ${getVal("ispDate") || "N/A"}\n`;
-        text += `Resources: ${getVal("insurance")}\n\n`;
-        
+        text += `Implementation Date: ${getVal("ispDate") || "N/A"} | Coordinator: ${getVal("coordinator") || "N/A"}\n`;
+        text += `System Updates: MOEDIWEB (${getVal("moediDate") || "N/A"}), CIMOR (${getVal("cimorDate") || "N/A"})\n`;
+        text += `Assessments: Last Eval (${getVal("lastAssessment") || "N/A"}), Last LOC (${getVal("lastLOC") || "N/A"}), RAS/SIS Score (${getVal("rasSisScore") || "N/A"})\n`;
+        text += `Primary Resource: ${getVal("insurance")}\n\n`;
+
         text += `2. VISION FOR A GOOD LIFE\n`;
-        text += `Hopes & Dreams: ${getVal("aspirations") || "See personal vision statement."}\n`;
-        text += `Strengths/Tech: ${getVal("strengths") || "N/A"}\n`;
-        text += `Preferences: ${getVal("preferences") || "N/A"}\n\n`;
-        
+        text += `Personal Aspirations: ${getVal("aspirations") || "See personal vision statement."}\n`;
+        text += `Previous Goals Progress: ${getVal("prevGoals") || "N/A"}\n`;
+        text += `Strengths/Assets: ${getVal("strengths") || "N/A"}\n`;
+        text += `Technology/Support: Tech (${getVal("techHelpers") || "None"}), Relationships (${getVal("relationships") || "None"})\n`;
+        text += `Community Resources: ${getVal("communityResources") || "N/A"}\n\n`;
+
         text += `3. HEALTH, SAFETY & RISK\n`;
-        text += `Medication/Diet: ${getVal("medSupport") || "Standard per profile."}\n`;
-        text += `Evacuation Plan: ${getVal("evacPlan") || "N/A"}\n`;
-        text += `OSHA/Provider Risk: Level ${risk}. Precaution: ${osha}\n\n`;
-        
-        text += `4. LEGAL & RIGHTS\n`;
-        text += `Status: ${getVal("legalStatus")} | Provider Choice Offered: ${getVal("choiceOffered")}\n\n`;
-        
-        text += `5. MEASURABLE OUTCOMES\n`;
-        if(getVal("domain")) {
-          text += `The individual will receive ${verb} ${goal}.\n`;
-          text += `Frequency: ${freq} | Monitoring: SC Quarterly & Provider Monthly.`;
+        text += `Medication/Diet/Mobility: ${getVal("medSupport") || "Standard per profile."}\n`;
+        text += `Supervision: ${getVal("supervisionLevel")} | Risk Level: ${getVal("riskLevel")}\n`;
+        text += `Behavioral Status: ${getVal("behavioralStatus")} | OSHA Precaution: ${getVal("oshaPrecaution")}\n`;
+        text += `Evacuation/911 Plan: ${getVal("evacPlan") || "N/A"}\n\n`;
+
+        text += `4. LEGAL, RIGHTS & SATISFACTION\n`;
+        text += `Status: ${getVal("legalStatus")} | Rights Brochure: ${getVal("rightsBrochure")} | Consents: ${getVal("consents")}\n`;
+        text += `Service Satisfaction: ${getVal("serviceSatisfaction") || "N/A"}\n`;
+        text += `Conflict of Interest Info: ${getVal("conflictInfo")}\n`;
+        text += `Note: To file an anonymous complaint, contact the Office of Constituent Services at 1-800-364-9687.\n\n`;
+
+        text += `5. CONTRIBUTORS & ADMINISTRATION\n`;
+        text += `Contributors: ${getVal("contributors") || "N/A"}\n`;
+        text += `Participation: ${getVal("participation") || "N/A"}\n`;
+        text += `SC Monitoring: ${getVal("scFrequency") || "N/A"}\n`;
+        text += `Payee/Spending: ${getVal("payeeInfo") || "N/A"} | Burial: ${getVal("burialInfo") || "N/A"}\n\n`;
+
+        text += `6. MEASURABLE OUTCOMES\n`;
+        if (getVal("domain")) {
+          text += `The individual will receive ${getVal("verb")} ${getVal("goalTemplate")}.\n`;
+          text += `Frequency: ${getVal("frequency") || "[FREQUENCY]"} | Monitoring: SC Quarterly & Provider Monthly.`;
         } else {
           text += `(Outcome narrative pending domain selection)`;
         }
@@ -606,40 +1040,49 @@
       function injectResource(res) {
         const display = document.getElementById("narrativeDisplay");
         display.innerText += `\n\n[RESOURCE INJECTION]: Collaboration with ${res} integrated.`;
-        if(window.innerWidth <= 1024) toggleSidebar();
+        if (window.innerWidth <= 1024) toggleSidebar();
       }
 
       function resetForm() {
-        if(confirm("Start a new plan? This clears the current workspace.")) {
+        if (confirm("Start a new plan? This clears the current workspace.")) {
           location.reload();
         }
       }
 
       function copyToClipboard() {
-        navigator.clipboard.writeText(document.getElementById("narrativeDisplay").innerText);
+        navigator.clipboard.writeText(
+          document.getElementById("narrativeDisplay").innerText,
+        );
         alert("Full ISP Summary copied to clipboard!");
       }
 
       function saveToHistory() {
-        const history = JSON.parse(localStorage.getItem('isp_drafts') || '[]');
+        const history = JSON.parse(localStorage.getItem("isp_drafts") || "[]");
         history.unshift({
-            id: Date.now(),
-            date: new Date().toLocaleDateString(),
-            title: document.getElementById("clientName").value || "Unnamed Draft",
-            text: document.getElementById("narrativeDisplay").innerText
+          id: Date.now(),
+          date: new Date().toLocaleDateString(),
+          title: document.getElementById("clientName").value || "Unnamed Draft",
+          text: document.getElementById("narrativeDisplay").innerText,
         });
-        localStorage.setItem('isp_drafts', JSON.stringify(history.slice(0, 10)));
+        localStorage.setItem(
+          "isp_drafts",
+          JSON.stringify(history.slice(0, 10)),
+        );
         renderHistory();
       }
 
       function renderHistory() {
-        const history = JSON.parse(localStorage.getItem('isp_drafts') || '[]');
-        document.getElementById('historyList').innerHTML = history.map(item => `
+        const history = JSON.parse(localStorage.getItem("isp_drafts") || "[]");
+        document.getElementById("historyList").innerHTML = history
+          .map(
+            (item) => `
           <div class="history-item" onclick="alert('Viewing draft: ' + '${item.title}')">
             <span class="history-title">${item.title}</span>
             <span class="history-date">${item.date}</span>
           </div>
-        `).join('');
+        `,
+          )
+          .join("");
       }
 
       init();
