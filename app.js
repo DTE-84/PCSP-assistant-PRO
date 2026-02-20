@@ -66,6 +66,7 @@ const FORM_FIELDS = [
   "dmhID",
   "coordinator",
   "officeType",
+  "officeLocation",
   "maritalStatus",
   "voterStatus",
   "religion",
@@ -128,6 +129,7 @@ const FORM_FIELDS = [
   "commEvalNeeded",
   "commEvalWhyNot",
   "commEvalBarriers",
+  "commChartAttached",
   // Likes & Dislikes
   "likesActivities",
   "likesFoods",
@@ -220,6 +222,30 @@ function toggleCommMethodOther(cb) {
     : "none";
   updateUI();
 }
+
+function toggleCommChartNA(cb) {
+  const btn = document.getElementById("addCommRowBtn");
+  const attached = document.getElementById("commChartAttached");
+  if (cb.checked) {
+    if (commChartRows.length > 0) {
+      if (confirm("Checking N/A will clear all existing chart entries. Continue?")) {
+        commChartRows = [];
+        renderCommChart();
+      } else {
+        cb.checked = false;
+        return;
+      }
+    }
+    btn.disabled = true;
+    attached.disabled = true;
+    attached.value = "";
+  } else {
+    btn.disabled = false;
+    attached.disabled = false;
+  }
+  updateUI();
+}
+
 function toggleNAField(fieldId, cbId) {
   const cb = document.getElementById(cbId);
   const field = document.getElementById(fieldId);
@@ -689,7 +715,7 @@ function updateUI() {
 
   text += `IDENTITY\n`;
   text += `Name: ${displayName} | DOB: ${displayDOB} | DMH ID: ${displayDMH}\n`;
-  text += `TCM Agency: ${getVal("coordinator") || "N/A"} | Office Type: ${getVal("officeType") || "N/A"}\n`;
+  text += `TCM Agency: ${getVal("coordinator") || "N/A"} | Office Type: ${getVal("officeType") || "N/A"} (${getVal("officeLocation") || "Location not specified"})\n`;
   text += `Marital Status: ${getVal("maritalStatus") || "N/A"} | Voter Status: ${getVal("voterStatus") || "N/A"}\n`;
   const religionVal =
     getVal("religion") === "Other"
@@ -784,7 +810,17 @@ function updateUI() {
     : "";
   if (whyNot) text += `Reason (No Eval): ${whyNot}\n`;
   if (barriers) text += `Communication Barriers: ${barriers}\n`;
-  text += `Communication Chart:\n${getCommChartNarrative()}\n\n`;
+  
+  text += `Communication Chart: `;
+  if (document.getElementById("commChartNA").checked) {
+    text += `Not Applicable\n`;
+  } else {
+    const attached = getVal("commChartAttached");
+    if (attached) text += `(See Attached: ${attached})\n`;
+    else text += `\n`;
+    text += getCommChartNarrative() + `\n`;
+  }
+  text += `\n`;
 
   text += `3. LIKES & DISLIKES\n`;
   text += `───────────────────────────────────────────────────────────────────\n\n`;
@@ -1051,6 +1087,7 @@ function captureFormData() {
   // Capture comm chart rows and important people
   formData._commChartRows = JSON.parse(JSON.stringify(commChartRows));
   formData._importantPeople = JSON.parse(JSON.stringify(importantPeople));
+  formData._commChartNA = document.getElementById("commChartNA").checked;
   return formData;
 }
 
@@ -1110,6 +1147,12 @@ function restoreFormData(formData) {
   if (Array.isArray(formData._importantPeople)) {
     importantPeople = formData._importantPeople;
     renderImportantPeople();
+  }
+  // Restore comm chart N/A state
+  const naCb = document.getElementById("commChartNA");
+  if (naCb) {
+    naCb.checked = !!formData._commChartNA;
+    toggleCommChartNA(naCb);
   }
   // Re-run toggles so conditional fields show/hide correctly
   toggleReligionOther();

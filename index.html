@@ -123,6 +123,15 @@
               </select>
             </div>
             <div class="field-group">
+              <label>Office Location / County</label>
+              <input
+                type="text"
+                id="officeLocation"
+                placeholder="e.g. Hannibal, Marion"
+                oninput="updateUI()"
+              />
+            </div>
+            <div class="field-group">
               <label>Marital Status</label>
               <select id="maritalStatus" onchange="updateUI()">
                 <option value="Single">Single</option>
@@ -841,14 +850,21 @@
           </div>
 
           <!-- 2D: Communication Chart -->
-          <div class="subsection-label">Communication Chart</div>
+          <div class="subsection-label" style="display: flex; justify-content: space-between; align-items: center;">
+            Communication Chart
+            <label style="font-size: 11px; font-weight: 700; color: var(--marion-blue); cursor: pointer; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
+              <input type="checkbox" id="commChartNA" onchange="toggleCommChartNA(this)">
+              Not Applicable
+            </label>
+          </div>
           <div id="commChartContainer">
             <p style="font-size: 12px; color: #999; margin: 8px 0 12px">
               No communication entries added. Click below to add one.
             </p>
-            <textarea id="See Attached" placeholder="See Attached" oninput=""updateUI()""></textarea>
+            <textarea id="commChartAttached" placeholder="See Attached (Optional notes...)" oninput="updateUI()"></textarea>
           </div>
           <button
+            id="addCommRowBtn"
             class="btn btn-outline"
             type="button"
             onclick="addCommChartRow()"
