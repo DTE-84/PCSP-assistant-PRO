@@ -1129,9 +1129,115 @@
         <!-- ── Section 6: Health, Safety & Risk ── -->
         <div class="form-section" id="sec-health">
           <div class="section-title">
-            <span>6</span> Health, Safety & Risk Planning
+            <span>6</span> Health, Safety &amp; Risk Planning
           </div>
+          
+          <!-- 6A: Medical Profile -->
+          <div class="subsection-label">Medical Profile &amp; History</div>
           <div class="form-grid">
+            <div class="field-group full">
+              <label>Primary &amp; Secondary Diagnosis</label>
+              <textarea id="diagnosis" placeholder="List all formal diagnoses..." oninput="updateUI()"></textarea>
+            </div>
+            <div class="field-group full">
+              <label>Personal Outcomes (Discovered during assessment)</label>
+              <textarea id="personalOutcomes" placeholder="What medical supports does the individual want/need?" oninput="updateUI()"></textarea>
+            </div>
+            <div class="field-group">
+              <label>HRST Status (If Waivered)</label>
+              <select id="hrstStatus" onchange="updateUI()">
+                <option value="Complete">Complete</option>
+                <option value="Opt-Out (Form in Packet)">Opt-Out (Include Form)</option>
+                <option value="N/A">Not Applicable</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label>Telehealth Used? (Waivered Only)</label>
+              <select id="telehealth" onchange="updateUI()">
+                <option value="No">No</option>
+                <option value="Yes">Yes</option>
+              </select>
+            </div>
+            <div class="field-group full">
+              <label>Medical History / Traumatic Stressors</label>
+              <textarea id="medHistory" placeholder="Surgeries, Injuries, SIB, Psych Admissions, Loss, Frequent Moves, etc." oninput="updateUI()"></textarea>
+            </div>
+          </div>
+
+          <!-- 6B: Prevention & Providers -->
+          <div class="subsection-label">Prevention &amp; Providers</div>
+          <div class="form-grid">
+            <div class="field-group">
+              <label>Primary Care Physician (PCP)</label>
+              <input type="text" id="pcpName" placeholder="Name, Contact, Frequency" oninput="updateUI()" />
+            </div>
+            <div class="field-group">
+              <label>Specialists (Dental, Vision, etc.)</label>
+              <textarea id="specialists" placeholder="Specialist name, specialty, frequency of visits" oninput="updateUI()"></textarea>
+            </div>
+            <div class="field-group full">
+              <label>Prevention (Diet, Exercise, Screenings)</label>
+              <textarea id="preventionDiet" placeholder="Dietary needs, weight management, immunizations, cancer screenings, etc." oninput="updateUI()"></textarea>
+            </div>
+          </div>
+
+          <!-- 6C: Medications & Protocols -->
+          <div class="subsection-label">Medications &amp; Health Protocols</div>
+          <div class="form-grid">
+            <div class="field-group full">
+              <label>Current Medications (Name, Dosage, Purpose)</label>
+              <textarea id="medicationDetails" placeholder="List all meds. Explicitly state purpose for each (e.g. Hypertension, Diabetes)." oninput="updateUI()"></textarea>
+            </div>
+            <div class="field-group full">
+              <label>PRN Psychotropic Protocol (If Applicable)</label>
+              <textarea id="psychotropicProtocol" placeholder="Dosage, Risk Factors, and specific triggers for administration." oninput="updateUI()"></textarea>
+            </div>
+            <div class="field-group">
+              <label>Self-Administration of Meds</label>
+              <select id="selfAdmin" onchange="updateUI()">
+                <option value="Independent">Independent</option>
+                <option value="Needs Supports (Goal Required)">Needs Supports (Add to Action Plan)</option>
+                <option value="Not Capable">Not Capable</option>
+              </select>
+            </div>
+            <div class="field-group">
+              <label>Health Parameters to Track</label>
+              <div class="multi-select-container" id="healthParamsContainer">
+                <div class="multi-select-display" onclick="toggleMultiSelect('healthParamsContainer')">
+                  <div class="selected-tags" id="healthParamsTags">
+                    <span class="placeholder">Select Parameters...</span>
+                  </div>
+                </div>
+                <div class="multi-select-dropdown">
+                  <label class="multi-option"><input type="checkbox" value="Weight" onchange="updateHealthParams()"><span>Weight</span></label>
+                  <label class="multi-option"><input type="checkbox" value="Blood Pressure" onchange="updateHealthParams()"><span>Blood Pressure</span></label>
+                  <label class="multi-option"><input type="checkbox" value="Blood Sugar" onchange="updateHealthParams()"><span>Blood Sugar</span></label>
+                  <label class="multi-option"><input type="checkbox" value="Seizure Logs" onchange="updateHealthParams()"><span>Seizure Logs</span></label>
+                  <label class="multi-option"><input type="checkbox" value="Bowel Logs" onchange="updateHealthParams()"><span>Bowel Movement Logs</span></label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- 6D: Known Risks -->
+          <div class="subsection-label">Known Health Risks &amp; Emergency Planning</div>
+          <div class="form-grid">
+            <div class="field-group full">
+              <label>Identified Health Risks</label>
+              <textarea id="healthRisks" placeholder="Choking/Aspiration, Fall Risk, Skin Breakdown, Dehydration, etc." oninput="updateUI()"></textarea>
+            </div>
+            <div class="field-group">
+              <label>Evacuation / 911 Plan</label>
+              <textarea id="evacPlan" placeholder="Describe steps for emergencies and evacuation." oninput="updateUI()"></textarea>
+            </div>
+            <div class="field-group">
+              <label>DNR / CPR Status</label>
+              <select id="dnrStatus" onchange="updateUI()">
+                <option value="Full Code (CPR)">Full Code (CPR)</option>
+                <option value="Non-Hospital DNR">Non-Hospital DNR</option>
+                <option value="Alternative to CPR (Waivered)">Alternative to CPR (Waivered)</option>
+              </select>
+            </div>
             <div class="field-group">
               <label>Provider Risk Level</label>
               <select id="riskLevel" onchange="updateUI()">
@@ -1158,39 +1264,18 @@
                 <option value="ATSC Involved">ATSC Involved</option>
               </select>
             </div>
-            <div class="field-group half">
+            <div class="field-group">
               <label>Staff Precaution (OSHA 3148)</label>
               <select id="oshaPrecaution" onchange="updateUI()">
-                <option value="Standard universal precautions apply.">
-                  Standard Precautions
-                </option>
-                <option value="Two-staff escort required for community.">
-                  2-Staff Escort Protocol
-                </option>
-                <option value="Staff to maintain clear path to exit.">
-                  Environmental Awareness
-                </option>
-                <option value="Utilize de-escalation (Mandt/NCI).">
-                  De-escalation Protocol
-                </option>
+                <option value="Standard universal precautions apply.">Standard Precautions</option>
+                <option value="Two-staff escort required for community.">2-Staff Escort Protocol</option>
+                <option value="Staff to maintain clear path to exit.">Environmental Awareness</option>
+                <option value="Utilize de-escalation (Mandt/NCI).">De-escalation Protocol</option>
               </select>
             </div>
             <div class="field-group full">
-              <label>Medication, Dietary & Mobility Risks</label>
-              <textarea
-                id="medSupport"
-                placeholder="List medications, diet (e.g. Mechanical Soft/Choking Risk), and mobility needs (e.g. Falls risk)."
-                oninput="updateUI()"
-              ></textarea>
-            </div>
-            <div class="field-group full">
-              <label>Emergency Evacuation & 911 Support</label>
-              <input
-                type="text"
-                id="evacPlan"
-                placeholder="E.g. Independent exit, 1:1 assist, ability to call 911."
-                oninput="updateUI()"
-              />
+              <label>Allergies / Sensitivities</label>
+              <textarea id="allergies" placeholder="Food, drug, or environmental allergies and reactions." oninput="updateUI()"></textarea>
             </div>
           </div>
         </div>

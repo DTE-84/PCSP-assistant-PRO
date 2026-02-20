@@ -97,7 +97,19 @@ const FORM_FIELDS = [
   "relationships",
   "communityResources",
   "learningStyleNotes",
-  "medSupport",
+  "diagnosis",
+  "personalOutcomes",
+  "hrstStatus",
+  "telehealth",
+  "medHistory",
+  "pcpName",
+  "specialists",
+  "preventionDiet",
+  "medicationDetails",
+  "psychotropicProtocol",
+  "selfAdmin",
+  "healthRisks",
+  "dnrStatus",
   "riskLevel",
   "supervisionLevel",
   "behavioralStatus",
@@ -214,6 +226,37 @@ function updateLegalRoles() {
 function getLegalRolesSelected() {
   const checkboxes = document.querySelectorAll(
     "#legalRolesContainer input[type=checkbox]",
+  );
+  const selected = [];
+  checkboxes.forEach((cb) => {
+    if (cb.checked) selected.push(cb.value);
+  });
+  return selected.length ? selected.join(", ") : "Not specified";
+}
+
+function updateHealthParams() {
+  const container = document.getElementById("healthParamsContainer");
+  const checkboxes = container.querySelectorAll("input[type=checkbox]");
+  const tagContainer = document.getElementById("healthParamsTags");
+  const selected = [];
+
+  checkboxes.forEach((cb) => {
+    if (cb.checked) selected.push(cb.value);
+  });
+
+  if (selected.length === 0) {
+    tagContainer.innerHTML = '<span class="placeholder">Select Parameters...</span>';
+  } else {
+    tagContainer.innerHTML = selected
+      .map((s) => `<span class="selected-tag">${s}</span>`)
+      .join("");
+  }
+  updateUI();
+}
+
+function getHealthParamsSelected() {
+  const checkboxes = document.querySelectorAll(
+    "#healthParamsContainer input[type=checkbox]",
   );
   const selected = [];
   checkboxes.forEach((cb) => {
@@ -898,10 +941,21 @@ function updateUI() {
   text += `\n`;
 
   text += `6. HEALTH, SAFETY & RISK\n`;
-  text += `Medication/Diet/Mobility: ${getVal("medSupport") || "Standard per profile."}\n`;
-  text += `Supervision: ${getVal("supervisionLevel")} | Risk Level: ${getVal("riskLevel")}\n`;
-  text += `Behavioral Status: ${getVal("behavioralStatus")} | OSHA Precaution: ${getVal("oshaPrecaution")}\n`;
-  text += `Evacuation/911 Plan: ${getVal("evacPlan") || "N/A"}\n\n`;
+  text += `Diagnosis: ${getVal("diagnosis") || "N/A"}\n`;
+  text += `Personal Outcomes: ${getVal("personalOutcomes") || "N/A"}\n`;
+  text += `HRST Status: ${getVal("hrstStatus")} | Telehealth: ${getVal("telehealth")}\n`;
+  if (getVal("medHistory")) text += `Medical History/Stressors: ${getVal("medHistory")}\n`;
+  text += `PCP: ${getVal("pcpName") || "N/A"} | Specialists: ${getVal("specialists") || "None listed"}\n`;
+  if (getVal("preventionDiet")) text += `Prevention/Screenings: ${getVal("preventionDiet")}\n`;
+  text += `Medications: ${getVal("medicationDetails") || "N/A"}\n`;
+  if (getVal("psychotropicProtocol")) text += `PRN Psychotropic Protocol: ${getVal("psychotropicProtocol")}\n`;
+  text += `Self-Admin Status: ${getVal("selfAdmin")} | Parameters Tracked: ${getHealthParamsSelected()}\n`;
+  text += `Health Risks: ${getVal("healthRisks") || "N/A"}\n`;
+  text += `DNR/CPR Status: ${getVal("dnrStatus")} | Supervision: ${getVal("supervisionLevel")}\n`;
+  text += `Risk Level: ${getVal("riskLevel")} | Behavioral: ${getVal("behavioralStatus")}\n`;
+  text += `OSHA: ${getVal("oshaPrecaution")} | Evacuation: ${getVal("evacPlan") || "N/A"}\n`;
+  if (getVal("allergies")) text += `Allergies/Sensitivities: ${getVal("allergies")}\n`;
+  text += `\n`;
 
   text += `7. LEGAL, RIGHTS & SATISFACTION\n`;
   text += `Authority: ${getLegalRolesSelected()}\n`;
@@ -1123,6 +1177,13 @@ function captureFormData() {
   formData._legalRoles = Array.from(lrBoxes)
     .filter((cb) => cb.checked)
     .map((cb) => cb.value);
+  // Capture health params
+  const hpBoxes = document.querySelectorAll(
+    "#healthParamsContainer input[type=checkbox]",
+  );
+  formData._healthParams = Array.from(hpBoxes)
+    .filter((cb) => cb.checked)
+    .map((cb) => cb.value);
   // Capture comm chart rows and important people
   formData._commChartRows = JSON.parse(JSON.stringify(commChartRows));
   formData._importantPeople = JSON.parse(JSON.stringify(importantPeople));
@@ -1187,6 +1248,16 @@ function restoreFormData(formData) {
       cb.checked = formData._legalRoles.includes(cb.value);
     });
     updateLegalRoles();
+  }
+  // Restore health params checkboxes
+  if (Array.isArray(formData._healthParams)) {
+    const hpBoxes = document.querySelectorAll(
+      "#healthParamsContainer input[type=checkbox]",
+    );
+    hpBoxes.forEach((cb) => {
+      cb.checked = formData._healthParams.includes(cb.value);
+    });
+    updateHealthParams();
   }
   // Restore comm chart and important people
   if (Array.isArray(formData._commChartRows)) {
