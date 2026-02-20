@@ -969,85 +969,47 @@
           </button>
         </div>
 
-        <!-- ── Section 5: Hopes, Dreams & Wants / Concerns ── -->
+        <!-- ── Section 5: Vision for a Good Life ── -->
         <div class="form-section" id="sec-vision">
-          <div class="section-title"><span>5</span> Hopes, Dreams &amp; Wants / Concerns</div>
+          <div class="section-title"><span>5</span> Vision for a Good Life</div>
           <div class="form-grid">
             <div class="field-group full">
-              <label>Personal Aspirations (Future Hopes & Dreams)</label>
-              <textarea
-                id="aspirations"
-                placeholder="How they will be supported with goals."
-                oninput="updateUI()"
-              ></textarea>
+              <label>Hopes, Dreams &amp; Aspirations</label>
+              <textarea id="aspirations" placeholder="What does the individual want their life to look like in 1-3 years? What would they like to try?" oninput="updateUI()"></textarea>
             </div>
             <div class="field-group full">
-              <label>What would the Individual like to try?</label>
-              <textarea
-                id="likesToTry"
-                placeholder="Sports, Games, Hobbies, Music, Reading, Writing, Art, Cooking, Drawing, Painting, Gardening, etc."
-                oninput="updateUI()"
-              ></textarea>
+              <label>Former Goals &amp; Progress</label>
+              <textarea id="prevGoals" placeholder="Discuss former hopes, dreams, and concerns and the progress (or lack thereof) made." oninput="updateUI()"></textarea>
             </div>
             <div class="field-group full">
-              <label>How can we support this individual to meet their concerns?</label>
-              <textarea
-                id="supportNeeded"
-                placeholder="E.g. Friendly, uses iPad for communication, strong walker... relation to goals?"
-                oninput="updateUI()"
-              ></textarea>
+              <label>How to Support These Vision Outcomes</label>
+              <textarea id="supportNeeded" placeholder="What specific supports are needed to help get their hopes, dreams, and concerns met?" oninput="updateUI()"></textarea>
             </div>
-            <div class="field-group half">
-              <label>Ways to support the individual</label>
-              <input
-                type="text"
-                id="individualSupport"
-                placeholder="Apps, tablets, adaptive utensils, etc."
-                oninput="updateUI()"
-              />
+            <div class="field-group">
+              <label>Personal Strengths &amp; Assets</label>
+              <textarea id="strengths" placeholder="Individual strengths, skills, and personal assets discovered during assessment." oninput="updateUI()"></textarea>
             </div>
-            <div class="field-group half">
-              <label>Limitations from the MAAS or other assessment tools.</label>
-              <input
-                type="text"
-                id="maasTools"
-                placeholder="If not waivered - Not Applicable. Otherwise, E.g. Who helps achieve these goals?"
-                oninput="updateUI()"
-              />
+            <div class="field-group">
+              <label>MAAS / Vineland / MOCABI Limitations</label>
+              <textarea id="maasTools" placeholder="If waivered, discuss limitations on assessment tools and how the individual is supported." oninput="updateUI()"></textarea>
             </div>
-            <div class="field-group full">
-              <label>Personal Staff Preference</label>
-              <textarea
-                id="communityResources"
-                placeholder="If individual has staff - Preferencees may include: Male, Female, Young, Preference who helps with Personal Care, Preference who helps with Activities, etc..."
-                oninput="updateUI()"
-              ></textarea>
+            <div class="field-group">
+              <label>Rituals &amp; Routines</label>
+              <textarea id="ritualsRoutines" placeholder="Rituals or routines that are important to the person for consistency." oninput="updateUI()"></textarea>
             </div>
-            <div class="field-group full">
-              <label>Other Supports</label>
-              <textarea
-                id="otherSupport"
-                placeholder="Discuss the supports needed in all aspects of the individual's life(school, work, home, etc...)"
-                oninput="updateUI()"
-              ></textarea>
-            </div>
-             <div class="field-group full">
-              <label>Rituals/Routines</label>
-              <textarea
-                id="ritualsRoutines"
-                placeholder="What are those important to the individual."
-                oninput="updateUI()"
-              ></textarea>
-            </div>
-             <div class="field-group full">
+            <div class="field-group">
               <label>Religious Supports</label>
-              <textarea
-                id="religiousSupports"
-                placeholder="If religion is marked on Demo, Section, ensure you discuss religious supports."
-                oninput="updateUI()"
-              ></textarea>
+              <textarea id="religiousSupports" placeholder="If religion is marked on Demo section, ensure you discuss religious supports here." oninput="updateUI()"></textarea>
             </div>
-             <div class="field-group full">
+            <div class="field-group full">
+              <label>Individual Preference for Staff</label>
+              <textarea id="staffPreference" placeholder="Preferences for staff members (e.g. male/female, personality) for specific tasks like bathing or gym." oninput="updateUI()"></textarea>
+            </div>
+            <div class="field-group full">
+              <label>Support in All Aspects (School, Work, Home)</label>
+              <textarea id="otherSupport" placeholder="Discuss supports needed across all environments to ensure consistency." oninput="updateUI()"></textarea>
+            </div>
+            <div class="field-group full">
               <label>How the Individual Learns Best / Learning Style</label>
               <div class="multi-select-container" id="learningStyleContainer">
                 <div class="multi-select-display" onclick="toggleMultiSelect('learningStyleContainer')">
@@ -1056,72 +1018,31 @@
                   </div>
                 </div>
                 <div class="multi-select-dropdown">
-                  <label class="multi-option">
-                    <input type="checkbox" value="Visual" onchange="updateLearningStyles()">
-                    <span>Visual (Pictures, Images, Spatial)</span>
-                  </label>
-                  <label class="multi-option">
-                    <input type="checkbox" value="Auditory" onchange="updateLearningStyles()">
-                    <span>Auditory (Sound, Music)</span>
-                  </label>
-                  <label class="multi-option">
-                    <input type="checkbox" value="Kinesthetic" onchange="updateLearningStyles()">
-                    <span>Kinesthetic (Physical, Touch, Hands-on)</span>
-                  </label>
-                  <label class="multi-option">
-                    <input type="checkbox" value="Reading/Writing" onchange="updateLearningStyles()">
-                    <span>Reading / Writing</span>
-                  </label>
-                  <label class="multi-option">
-                    <input type="checkbox" value="Verbal" onchange="updateLearningStyles()">
-                    <span>Verbal (Speech, Writing)</span>
-                  </label>
-                  <label class="multi-option">
-                    <input type="checkbox" value="Logical" onchange="updateLearningStyles()">
-                    <span>Logical (Mathematical, Systems)</span>
-                  </label>
-                  <label class="multi-option">
-                    <input type="checkbox" value="Social" onchange="updateLearningStyles()">
-                    <span>Social (Interpersonal, Group)</span>
-                  </label>
-                  <label class="multi-option">
-                    <input type="checkbox" value="Solitary" onchange="updateLearningStyles()">
-                    <span>Solitary (Intrapersonal, Independent)</span>
-                  </label>
-                  <label class="multi-option">
-                    <input type="checkbox" value="Observation" onchange="updateLearningStyles()">
-                    <span>Observation (Watching others)</span>
-                  </label>
-                  <label class="multi-option">
-                    <input type="checkbox" value="Modeling" onchange="updateLearningStyles()">
-                    <span>Modeling (Imitating)</span>
-                  </label>
+                  <label class="multi-option"><input type="checkbox" value="Visual" onchange="updateLearningStyles()"><span>Visual (Pictures, Images, Spatial)</span></label>
+                  <label class="multi-option"><input type="checkbox" value="Auditory" onchange="updateLearningStyles()"><span>Auditory (Sound, Music)</span></label>
+                  <label class="multi-option"><input type="checkbox" value="Kinesthetic" onchange="updateLearningStyles()"><span>Kinesthetic (Physical, Touch, Hands-on)</span></label>
+                  <label class="multi-option"><input type="checkbox" value="Verbal" onchange="updateLearningStyles()"><span>Verbal (Speech, Writing)</span></label>
+                  <label class="multi-option"><input type="checkbox" value="Social" onchange="updateLearningStyles()"><span>Social (Interpersonal, Group)</span></label>
+                  <label class="multi-option"><input type="checkbox" value="Solitary" onchange="updateLearningStyles()"><span>Solitary (Intrapersonal, Independent)</span></label>
+                  <label class="multi-option"><input type="checkbox" value="Observation" onchange="updateLearningStyles()"><span>Observation (Watching others)</span></label>
+                  <label class="multi-option"><input type="checkbox" value="Modeling" onchange="updateLearningStyles()"><span>Modeling (Imitating)</span></label>
                 </div>
               </div>
             </div>
             <div class="field-group full">
               <label>Learning Style Notes</label>
-              <textarea
-                id="learningStyleNotes"
-                placeholder="Additional details on how the individual learns best..."
-                oninput="updateUI()"
-              ></textarea>
+              <textarea id="learningStyleNotes" placeholder="Additional details on the method by which the person learns best." oninput="updateUI()"></textarea>
             </div>
-             <div class="field-group full">
-              <label>Support Section</label>
-              <textarea
-                id="supportSection"
-                placeholder="Regulate water temperature, etc..."
-                oninput="updateUI()"
-              ></textarea>
-            </div>
-            <div class="field-group full">
+            <div class="field-group">
               <label>Cultural Differences</label>
-              <textarea
-                id="culturalDifferences"
-                placeholder="Person does not believe in certain holidays, Programs Celebrations, Taking individual certain places, or with other certain individuals."
-                oninput="updateUI()"
-              ></textarea>
+              <textarea id="culturalDifferences" placeholder="Person does not believe in certain holidays, programs, celebrations, etc." oninput="updateUI()"></textarea>
+            </div>
+            <div class="field-group">
+              <label>Regulate Water Temperature?</label>
+              <select id="waterTemp" onchange="updateUI()">
+                <option value="Independent">Independent (Add to Section 5)</option>
+                <option value="Needs Supports">Needs Supports</option>
+              </select>
             </div>
           </div>
         </div>
@@ -1359,10 +1280,55 @@
             <div class="field-group full">
               <label>Conflict of Interest Info Provided?</label>
               <select id="conflictInfo" onchange="updateUI()">
-                <option value="Yes">Yes - Clear information provided</option>
-                <option value="No">No</option>
+                <option value="Yes - Documentation shared">Yes - Documentation shared</option>
+                <option value="N/A">Not Applicable</option>
               </select>
             </div>
+          </div>
+
+          <!-- 7B: Due Process & Rights Limitations -->
+          <div class="subsection-label" style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px;">
+            Rights Limitations &amp; Due Process
+            <label style="font-size: 11px; font-weight: 700; color: var(--marion-blue); cursor: pointer; display: flex; align-items: center; gap: 6px; text-transform: uppercase; letter-spacing: 0.5px;">
+              <input type="checkbox" id="dueProcessNA" onchange="toggleDueProcess(this)">
+              No active limitations
+            </label>
+          </div>
+          
+          <div id="dueProcessFields">
+            <div class="form-grid">
+              <div class="field-group">
+                <label>Due Process Meeting Invitation</label>
+                <textarea id="dpInvitation" placeholder="Document when guardian/individual was invited and their response." oninput="updateUI()"></textarea>
+              </div>
+              <div class="field-group">
+                <label>Description of Limitation</label>
+                <textarea id="dpDescription" placeholder="What is the restriction and where/when is it imposed?" oninput="updateUI()"></textarea>
+              </div>
+              <div class="field-group full">
+                <label>Less Intrusive Methods Tried (HCBS Requirement)</label>
+                <textarea id="dpLessIntrusive" placeholder="Document specific methods that were attempted but did not work." oninput="updateUI()"></textarea>
+              </div>
+              <div class="field-group full">
+                <label>Historical Pattern / Source of Data</label>
+                <textarea id="dpHistorical" placeholder="Historical events justifying limitation. Include current data source (e.g. incident reports)." oninput="updateUI()"></textarea>
+              </div>
+              <div class="field-group">
+                <label>Teaching &amp; Support Strategies</label>
+                <textarea id="dpTeaching" placeholder="Goals/tasks to help the individual overcome the need for this support." oninput="updateUI()"></textarea>
+              </div>
+              <div class="field-group">
+                <label>Measurable Criteria for Lifting</label>
+                <textarea id="dpLiftingCriteria" placeholder="How will the Team know when the limit can be reduced or lifted?" oninput="updateUI()"></textarea>
+              </div>
+              <div class="field-group full">
+                <label>Monitoring &amp; Data Collection</label>
+                <textarea id="dpMonitoring" placeholder="Who documents? Where is data kept? Frequency? Review dates by SC." oninput="updateUI()"></textarea>
+              </div>
+            </div>
+            <p style="font-size: 11px; color: #666; font-style: italic; margin-top: 10px; border-left: 3px solid var(--gold); padding-left: 10px;">
+              Compliance Note: Plan must include assurance that interventions cause no harm and information regarding the right to appeal to the Office of Constituent Services.
+            </p>
           </div>
         </div>
 
