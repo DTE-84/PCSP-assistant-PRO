@@ -60,50 +60,404 @@ const resources = [
 
 // ── All form field IDs (used for save/restore) ──
 const FORM_FIELDS = [
-  "clientName",
-  "clientDOB",
-  "dmhID",
-  "ispDate",
-  "moediDate",
-  "cimorDate",
-  "lastAssessment",
-  "lastLOC",
-  "rasSisScore",
-  "coordinator",
-  "insurance",
-  "aspirations",
-  "prevGoals",
-  "strengths",
-  "techHelpers",
-  "relationships",
-  "communityResources",
-  "medSupport",
-  "riskLevel",
-  "supervisionLevel",
-  "behavioralStatus",
-  "oshaPrecaution",
-  "evacPlan",
-  "legalStatus",
-  "rightsBrochure",
-  "consents",
-  "serviceSatisfaction",
-  "conflictInfo",
-  "contributors",
-  "participation",
-  "scFrequency",
-  "payeeInfo",
-  "burialInfo",
-  "domain",
-  "verb",
-  "frequency",
-  "goalTemplate",
+  "clientName", "clientNickname", "clientDOB", "dmhID", "coordinator",
+  "officeType", "maritalStatus", "voterStatus", "religion", "religionOther",
+  "nativeLanguage", "otherLanguages", "commMethod",
+  "insurance", "spenddownAmount", "privateInsuranceProvider",
+  "dentalInsurance", "dentalOther",
+  "residencyType", "residenceNotes",
+  "schoolName", "educationStatus", "gradYear",
+  "employmentStatus", "employmentJob",
+  "ispDate", "moediDate", "cimorDate", "lastAssessment", "lastLOC", "rasSisScore",
+  "aspirations", "prevGoals", "strengths", "techHelpers", "relationships",
+  "communityResources", "medSupport", "riskLevel", "supervisionLevel",
+  "behavioralStatus", "oshaPrecaution", "evacPlan", "legalStatus",
+  "rightsBrochure", "consents", "serviceSatisfaction", "conflictInfo",
+  "contributors", "participation", "scFrequency", "payeeInfo", "burialInfo",
+  "domain", "verb", "frequency", "goalTemplate",
+  "ethnicityOther",
+  // Communication Section
+  "commPrimaryLanguage", "commUsesSignLang", "commSignLangType", "commSignLangTypeOther",
+  "commMethodOther", "commMethodNotes", "commEvalNeeded", "commEvalWhyNot", "commEvalBarriers",
+  // Likes & Dislikes
+  "likesActivities", "likesFoods", "likesPlaces", "likesOther",
+  "dislikesActivities", "dislikesFoods", "dislikesOther",
 ];
+
+// ─────────────────────────────────────────────
+//  COMMUNICATION SECTION helpers
+// ─────────────────────────────────────────────
+function toggleSignLangType() {
+  const val = document.getElementById("commUsesSignLang").value;
+  document.getElementById("signLangTypeGroup").style.display = val === "Yes" ? "" : "none";
+  if (val !== "Yes") document.getElementById("signLangTypeOtherGroup").style.display = "none";
+}
+function toggleSignLangTypeOther() {
+  const val = document.getElementById("commSignLangType").value;
+  document.getElementById("signLangTypeOtherGroup").style.display = val === "Other" ? "" : "none";
+}
+function toggleCommEvalFields() {
+  const val = document.getElementById("commEvalNeeded").value;
+  document.getElementById("commEvalWhyNotGroup").style.display = val === "No — Not Needed" ? "" : "none";
+  document.getElementById("commEvalBarriersGroup").style.display =
+    (val === "Yes — Evaluation(s) Needed" || val === "No — Not Needed") ? "" : "none";
+}
+function toggleCommMethodOther(cb) {
+  document.getElementById("commMethodOtherGroup").style.display = cb.checked ? "" : "none";
+  updateUI();
+}
+function toggleNAField(fieldId, cbId) {
+  const cb = document.getElementById(cbId);
+  const field = document.getElementById(fieldId);
+  if (cb.checked) {
+    field.value = "N/A";
+    field.disabled = true;
+  } else {
+    field.value = "";
+    field.disabled = false;
+  }
+  updateUI();
+}
+
+// ── Communication Chart (dynamic rows) ──
+let commChartRows = [];
+
+function addCommChartRow() {
+  commChartRows.push({ situation: "", meaning: "", response: "" });
+  renderCommChart();
+}
+
+function removeCommChartRow(i) {
+  commChartRows.splice(i, 1);
+  renderCommChart();
+  updateUI();
+}
+
+function updateCommRow(i, field, value) {
+  commChartRows[i][field] = value;
+  updateUI();
+}
+
+function renderCommChart() {
+  const container = document.getElementById("commChartContainer");
+  if (!commChartRows.length) {
+    container.innerHTML = `<p style="font-size:12px;color:#999;margin:8px 0 12px;">No communication entries added. Click below to add one.</p>`;
+    return;
+  }
+  container.innerHTML = `
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;margin-bottom:8px;">
+      <div style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;padding:0 4px;">When / Situation</div>
+      <div style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;padding:0 4px;">What It Means</div>
+      <div style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;padding:0 4px;">How Staff Should Respond</div>
+      <div></div>
+    </div>
+    ${commChartRows.map((row, i) => `
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr auto;gap:8px;margin-bottom:8px;align-items:start;">
+        <textarea style="min-height:60px;" placeholder="e.g. Pulls on sleeve" oninput="updateCommRow(${i},'situation',this.value)">${row.situation}</textarea>
+        <textarea style="min-height:60px;" placeholder="e.g. Needs to use restroom" oninput="updateCommRow(${i},'meaning',this.value)">${row.meaning}</textarea>
+        <textarea style="min-height:60px;" placeholder="e.g. Immediately escort to restroom" oninput="updateCommRow(${i},'response',this.value)">${row.response}</textarea>
+        <button class="remove-rep-btn" onclick="removeCommChartRow(${i})" title="Remove row" style="margin-top:6px;">✕</button>
+      </div>
+    `).join("")}
+  `;
+}
+
+function getCommMethodsSelected() {
+  const boxes = document.querySelectorAll("#commMethodGrid input[type=checkbox]");
+  const selected = [];
+  boxes.forEach(cb => {
+    if (cb.checked) {
+      if (cb.value === "Other Communication Method") {
+        const other = document.getElementById("commMethodOther") ? document.getElementById("commMethodOther").value.trim() : "";
+        selected.push(other ? `Other (${other})` : "Other");
+      } else {
+        selected.push(cb.value);
+      }
+    }
+  });
+  return selected.length ? selected.join(", ") : "Not specified";
+}
+
+function getCommChartNarrative() {
+  if (!commChartRows.length) return "  No communication chart entries on file.";
+  return commChartRows.map((row, i) =>
+    `  Entry ${i+1}: "${row.situation || "N/A"}" -> Meaning: "${row.meaning || "N/A"}" -> Staff Response: "${row.response || "N/A"}"`
+  ).join("\n");
+}
+
+// ─────────────────────────────────────────────
+//  IMPORTANT PEOPLE — Dynamic multi-entry
+// ─────────────────────────────────────────────
+let importantPeople = [];
+
+function addImportantPerson() {
+  importantPeople.push({ name: "", relationship: "", activities: [{ what: "", frequency: "" }] });
+  renderImportantPeople();
+  updateUI();
+}
+
+function removeImportantPerson(i) {
+  importantPeople.splice(i, 1);
+  renderImportantPeople();
+  updateUI();
+}
+
+function addPersonActivity(personIdx) {
+  importantPeople[personIdx].activities.push({ what: "", frequency: "" });
+  renderImportantPeople();
+}
+
+function removePersonActivity(personIdx, actIdx) {
+  importantPeople[personIdx].activities.splice(actIdx, 1);
+  renderImportantPeople();
+  updateUI();
+}
+
+function updatePerson(personIdx, field, value) {
+  importantPeople[personIdx][field] = value;
+  const headers = document.querySelectorAll(".person-header-title");
+  if (headers[personIdx]) {
+    const p = importantPeople[personIdx];
+    headers[personIdx].textContent = `Person #${personIdx + 1}${p.name ? " — " + p.name : ""}${p.relationship ? " (" + p.relationship + ")" : ""}`;
+  }
+  updateUI();
+}
+
+function updatePersonActivity(personIdx, actIdx, field, value) {
+  importantPeople[personIdx].activities[actIdx][field] = value;
+  updateUI();
+}
+
+function renderImportantPeople() {
+  const container = document.getElementById("importantPeopleContainer");
+  if (!importantPeople.length) {
+    container.innerHTML = `<p style="font-size:12px;color:#999;margin:8px 0 12px;">No people added yet. Click below to add someone important to this individual.</p>`;
+    return;
+  }
+  container.innerHTML = importantPeople.map((person, i) => `
+    <div class="legal-rep-card" style="margin-bottom:16px;">
+      <div class="rep-header">
+        <span class="rep-title person-header-title">Person #${i+1}${person.name ? " \u2014 " + person.name : ""}${person.relationship ? " (" + person.relationship + ")" : ""}</span>
+        <button class="remove-rep-btn" onclick="removeImportantPerson(${i})" title="Remove">&#10005;</button>
+      </div>
+      <div class="form-grid" style="margin-bottom:12px;">
+        <div class="field-group">
+          <label>Name</label>
+          <input type="text" value="${person.name}" placeholder="e.g. Mary Smith"
+            oninput="updatePerson(${i},'name',this.value)" />
+        </div>
+        <div class="field-group half">
+          <label>Relationship to Individual</label>
+          <input type="text" value="${person.relationship}" placeholder="e.g. Mother, Brother, Friend, Staff"
+            oninput="updatePerson(${i},'relationship',this.value)" />
+        </div>
+      </div>
+      <div style="font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--gold);margin-bottom:8px;">Activities Together</div>
+      <div style="display:grid;grid-template-columns:1fr 200px auto;gap:8px;margin-bottom:6px;">
+        <div style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;">What They Like to Do Together</div>
+        <div style="font-size:11px;font-weight:700;color:#666;text-transform:uppercase;">How Often</div>
+        <div></div>
+      </div>
+      ${person.activities.map((act, j) => `
+        <div style="display:grid;grid-template-columns:1fr 200px auto;gap:8px;margin-bottom:8px;align-items:center;">
+          <input type="text" value="${act.what}" placeholder="e.g. Going to church, watching movies, fishing..."
+            oninput="updatePersonActivity(${i},${j},'what',this.value)" />
+          <input type="text" value="${act.frequency}" placeholder="e.g. Weekly, Monthly, Daily"
+            oninput="updatePersonActivity(${i},${j},'frequency',this.value)" />
+          <button class="remove-rep-btn" onclick="removePersonActivity(${i},${j})" title="Remove activity"
+            ${person.activities.length === 1 ? 'style="opacity:0.3;pointer-events:none;"' : ""}>&#10005;</button>
+        </div>
+      `).join("")}
+      <button class="btn btn-outline" type="button" onclick="addPersonActivity(${i})"
+        style="font-size:12px;padding:6px 14px;margin-top:4px;">+ Add Another Activity</button>
+    </div>
+  `).join("");
+}
+
+function getImportantPeopleNarrative() {
+  if (!importantPeople.length) return "No important people documented at this time.";
+  return importantPeople.map((p, i) => {
+    const name = p.name || `[Person ${i+1}]`;
+    const rel = p.relationship || "Relationship not specified";
+    const acts = p.activities
+      .filter(a => a.what)
+      .map(a => `${a.what}${a.frequency ? " (" + a.frequency + ")" : ""}`)
+      .join("; ");
+    return `  ${name} (${rel}): ${acts || "No activities listed"}`;
+  }).join("\n");
+}
 
 // ── Initialise App ──
 function init() {
   renderResources();
   renderHistory();
   loadTemplates();
+  renderLegalReps();
+  renderCommChart();
+  renderImportantPeople();
+  toggleCommEvalFields();
+}
+
+// ── Religion "Other" toggle ──
+function toggleReligionOther() {
+  const val = document.getElementById("religion").value;
+  document.getElementById("religionOtherGroup").style.display =
+    val === "Other" ? "" : "none";
+  updateUI();
+}
+
+// ── Ethnicity "Other" toggle ──
+function toggleEthnicityOther(cb) {
+  document.getElementById("ethnicityOtherGroup").style.display =
+    cb.checked ? "" : "none";
+  updateUI();
+}
+
+// ── Insurance conditional fields ──
+function toggleInsuranceFields() {
+  const val = document.getElementById("insurance").value;
+  document.getElementById("spenddownGroup").style.display =
+    val === "Medicaid — Spend Down" ? "" : "none";
+  document.getElementById("privateInsuranceGroup").style.display =
+    val === "Private Insurance" ? "" : "none";
+  updateUI();
+}
+
+// ── Dental "Other" toggle ──
+function toggleDentalOther() {
+  const val = document.getElementById("dentalInsurance").value;
+  document.getElementById("dentalOtherGroup").style.display =
+    val === "Other" ? "" : "none";
+  updateUI();
+}
+
+// ── Get selected ethnicities ──
+function getEthnicities() {
+  const boxes = document.querySelectorAll("#ethnicityGrid input[type=checkbox]");
+  const selected = [];
+  boxes.forEach((cb) => {
+    if (cb.checked) {
+      if (cb.value === "Other Ethnicity") {
+        const other = document.getElementById("ethnicityOther").value.trim();
+        selected.push(other ? `Other (${other})` : "Other");
+      } else {
+        selected.push(cb.value);
+      }
+    }
+  });
+  return selected.length ? selected.join(", ") : "Not Reported";
+}
+
+// ─────────────────────────────────────────────
+//  LEGAL REPRESENTATIVES — Dynamic multi-entry
+// ─────────────────────────────────────────────
+let legalReps = [];
+
+function renderLegalReps() {
+  const container = document.getElementById("legalRepsContainer");
+  if (!legalReps.length) {
+    container.innerHTML = `<p style="font-size:12px;color:#999;margin:8px 0 12px;">No legal representatives added. Click below to add one.</p>`;
+    return;
+  }
+  container.innerHTML = legalReps
+    .map(
+      (rep, i) => `
+    <div class="legal-rep-card">
+      <div class="rep-header">
+        <span class="rep-title">Representative #${i + 1}${rep.name ? " — " + rep.name : ""}</span>
+        <button class="remove-rep-btn" onclick="removeLegalRep(${i})" title="Remove">✕</button>
+      </div>
+      <div class="form-grid">
+        <div class="field-group">
+          <label>Full Name</label>
+          <input type="text" value="${rep.name || ""}" placeholder="Jane Doe"
+            oninput="updateRep(${i},'name',this.value)" />
+        </div>
+        <div class="field-group">
+          <label>Relationship to Individual</label>
+          <input type="text" value="${rep.relationship || ""}" placeholder="e.g. Mother, Brother, Court Appointee"
+            oninput="updateRep(${i},'relationship',this.value)" />
+        </div>
+        <div class="field-group">
+          <label>Type of Legal Authority</label>
+          <select onchange="updateRep(${i},'legalType',this.value)">
+            <option value="Full Guardianship" ${rep.legalType === "Full Guardianship" ? "selected" : ""}>Full Guardianship</option>
+            <option value="Limited Guardianship" ${rep.legalType === "Limited Guardianship" ? "selected" : ""}>Limited Guardianship</option>
+            <option value="Conservatorship" ${rep.legalType === "Conservatorship" ? "selected" : ""}>Conservatorship</option>
+            <option value="Power of Attorney (POA)" ${rep.legalType === "Power of Attorney (POA)" ? "selected" : ""}>Power of Attorney (POA)</option>
+            <option value="Healthcare POA" ${rep.legalType === "Healthcare POA" ? "selected" : ""}>Healthcare POA</option>
+            <option value="Custodian" ${rep.legalType === "Custodian" ? "selected" : ""}>Custodian</option>
+            <option value="Legal / Physical Custody" ${rep.legalType === "Legal / Physical Custody" ? "selected" : ""}>Legal / Physical Custody</option>
+            <option value="Representative Payee" ${rep.legalType === "Representative Payee" ? "selected" : ""}>Representative Payee</option>
+            <option value="Natural / Informal Support" ${rep.legalType === "Natural / Informal Support" ? "selected" : ""}>Natural / Informal Support (No Legal Authority)</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Lives with Individual?</label>
+          <select onchange="updateRep(${i},'livesWith',this.value)">
+            <option value="Yes" ${rep.livesWith === "Yes" ? "selected" : ""}>Yes — Same residence</option>
+            <option value="No — Different residence" ${rep.livesWith === "No — Different residence" ? "selected" : ""}>No — Different residence</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Phone Number</label>
+          <input type="text" value="${rep.phone || ""}" placeholder="(573) 555-0100"
+            oninput="updateRep(${i},'phone',this.value)" />
+        </div>
+        <div class="field-group half">
+          <label>Address (if different residence)</label>
+          <input type="text" value="${rep.address || ""}" placeholder="123 Main St, Hannibal MO 63401"
+            oninput="updateRep(${i},'address',this.value)" />
+        </div>
+      </div>
+    </div>
+  `,
+    )
+    .join("");
+}
+
+function addLegalRep() {
+  legalReps.push({
+    name: "", relationship: "", legalType: "Full Guardianship",
+    livesWith: "Yes", phone: "", address: "",
+  });
+  renderLegalReps();
+  updateUI();
+}
+
+function removeLegalRep(i) {
+  legalReps.splice(i, 1);
+  renderLegalReps();
+  updateUI();
+}
+
+function updateRep(i, field, value) {
+  legalReps[i][field] = value;
+  // Re-render header title only, not full re-render (avoid losing focus)
+  const titles = document.querySelectorAll(".rep-title");
+  if (titles[i]) {
+    titles[i].textContent = `Representative #${i + 1}${legalReps[i].name ? " — " + legalReps[i].name : ""}`;
+  }
+  updateUI();
+}
+
+function getLegalRepsNarrative() {
+  if (!legalReps.length) return "None on file.";
+  return legalReps
+    .map(
+      (rep, i) =>
+        `  Rep #${i + 1}: ${rep.name || "[Name not provided]"} | ${rep.legalType} | Relationship: ${rep.relationship || "N/A"} | Lives with individual: ${rep.livesWith} | Phone: ${rep.phone || "N/A"}${rep.address && rep.livesWith !== "Yes" ? " | Address: " + rep.address : ""}`,
+    )
+    .join("\n");
+}
+
+// Save / restore legalReps with form data
+function captureLegalReps() {
+  return JSON.parse(JSON.stringify(legalReps));
+}
+function restoreLegalReps(data) {
+  legalReps = Array.isArray(data) ? data : [];
+  renderLegalReps();
 }
 
 // ── Sidebar Toggle ──
@@ -146,19 +500,26 @@ function updateUI() {
   const getVal = (id) => document.getElementById(id).value;
 
   const name = getVal("clientName") || "";
+  const nickname = getVal("clientNickname") || "";
   const dob = getVal("clientDOB") || "";
   const dmhID = getVal("dmhID") || "";
 
   // Update sticky header
-  document.getElementById("headerName").textContent =
-    name || "No Individual Selected";
+  const displayHeaderName = name
+    ? nickname ? `${name} ("${nickname}")` : name
+    : "No Individual Selected";
+  document.getElementById("headerName").textContent = displayHeaderName;
   document.getElementById("headerDOB").textContent = dob
     ? new Date(dob + "T00:00:00").toLocaleDateString()
     : "—";
   document.getElementById("headerDMH").textContent = dmhID || "—";
 
   // Privacy masking for the preview
-  const displayName = isPrivacyOn ? "[INDIVIDUAL]" : name || "[NAME]";
+  const displayName = isPrivacyOn
+    ? "[INDIVIDUAL]"
+    : name
+      ? nickname ? `${name} ("${nickname}")` : name
+      : "[NAME]";
   const displayDOB = isPrivacyOn
     ? "[MM/DD/YYYY]"
     : dob
@@ -170,39 +531,130 @@ function updateUI() {
   let text = `MISSOURI PERSON CENTERED SERVICE PLAN (PCSP) SUMMARY\n`;
   text += `=====================================================\n\n`;
 
-  text += `1. DEMOGRAPHICS & SYSTEM INTEGRATION\n`;
+  text += `1. DEMOGRAPHICS / CONTRIBUTORS INFORMATION / LEGAL DEMOGRAPHICS\n`;
+  text += `─────────────────────────────────────────────────────────────────\n\n`;
+
+  text += `IDENTITY\n`;
   text += `Name: ${displayName} | DOB: ${displayDOB} | DMH ID: ${displayDMH}\n`;
+  text += `TCM Agency: ${getVal("coordinator") || "N/A"} | Office Type: ${getVal("officeType") || "N/A"}\n`;
+  text += `Marital Status: ${getVal("maritalStatus") || "N/A"} | Voter Status: ${getVal("voterStatus") || "N/A"}\n`;
+  const religionVal = getVal("religion") === "Other"
+    ? `Other — ${getVal("religionOther") || "not specified"}`
+    : (getVal("religion") || "N/A");
+  text += `Religion: ${religionVal}\n`;
+  text += `Ethnicity / Race: ${getEthnicities()}\n\n`;
+
+  text += `COMMUNICATION & LANGUAGE\n`;
+  text += `Native Language: ${getVal("nativeLanguage") || "N/A"} | Additional Languages: ${getVal("otherLanguages") || "None"}\n`;
+  text += `Primary Communication Method: ${getVal("commMethod") || "N/A"}\n\n`;
+
+  text += `INSURANCE & BENEFITS\n`;
+  let insuranceStr = getVal("insurance") || "N/A";
+  if (getVal("insurance") === "Medicaid — Spend Down" && getVal("spenddownAmount"))
+    insuranceStr += ` (Spend Down: ${getVal("spenddownAmount")})`;
+  if (getVal("insurance") === "Private Insurance" && getVal("privateInsuranceProvider"))
+    insuranceStr += ` — Provider: ${getVal("privateInsuranceProvider")}`;
+  text += `Medical: ${insuranceStr}\n`;
+  const dentalStr = getVal("dentalInsurance") === "Other"
+    ? `Other — ${getVal("dentalOther") || "not specified"}`
+    : (getVal("dentalInsurance") || "N/A");
+  text += `Dental: ${dentalStr}\n\n`;
+
+  text += `RESIDENCY\n`;
+  text += `Setting: ${getVal("residencyType") || "N/A"}\n`;
+  if (getVal("residenceNotes")) text += `Location Notes: ${getVal("residenceNotes")}\n`;
+  text += `\n`;
+
+  text += `LEGAL REPRESENTATIVES / GUARDIANS / CUSTODIANS\n`;
+  text += getLegalRepsNarrative() + `\n\n`;
+
+  text += `EDUCATION\n`;
+  text += `School: ${getVal("schoolName") || "N/A"} | Status: ${getVal("educationStatus") || "N/A"}`;
+  if (getVal("gradYear")) text += ` | Year: ${getVal("gradYear")}`;
+  text += `\n\n`;
+
+  text += `EMPLOYMENT\n`;
+  text += `Status: ${getVal("employmentStatus") || "N/A"}`;
+  if (getVal("employmentJob")) text += ` — ${getVal("employmentJob")}`;
+  text += `\n\n`;
+
+  text += `SYSTEM INTEGRATION\n`;
   text += `Implementation Date: ${getVal("ispDate") || "N/A"} | Coordinator: ${getVal("coordinator") || "N/A"}\n`;
   text += `System Updates: MOEDIWEB (${getVal("moediDate") || "N/A"}), CIMOR (${getVal("cimorDate") || "N/A"})\n`;
-  text += `Assessments: Last Eval (${getVal("lastAssessment") || "N/A"}), Last LOC (${getVal("lastLOC") || "N/A"}), RAS/SIS Score (${getVal("rasSisScore") || "N/A"})\n`;
-  text += `Primary Resource: ${getVal("insurance")}\n\n`;
+  text += `Assessments: Last Eval (${getVal("lastAssessment") || "N/A"}), Last LOC (${getVal("lastLOC") || "N/A"}), RAS/SIS Score (${getVal("rasSisScore") || "N/A"})\n\n`;
 
-  text += `2. VISION FOR A GOOD LIFE\n`;
+  text += `2. COMMUNICATION — WHAT WE NEED TO KNOW TO SUPPORT THE INDIVIDUAL\n`;
+  text += `───────────────────────────────────────────────────────────────────\n\n`;
+  const primLang = document.getElementById("commPrimaryLanguage") ? document.getElementById("commPrimaryLanguage").value || "N/A" : "N/A";
+  const usesSign = document.getElementById("commUsesSignLang") ? document.getElementById("commUsesSignLang").value : "No";
+  let signLangStr = "No";
+  if (usesSign === "Yes") {
+    const signType = document.getElementById("commSignLangType") ? document.getElementById("commSignLangType").value : "";
+    const signOther = document.getElementById("commSignLangTypeOther") ? document.getElementById("commSignLangTypeOther").value : "";
+    signLangStr = "Yes — " + (signType === "Other" ? (signOther || "Other") : signType);
+  } else if (usesSign === "N/A") {
+    signLangStr = "N/A";
+  }
+  text += `Primary Language: ${primLang} | Uses Sign Language: ${signLangStr}\n`;
+  text += `Communication Method(s): ${getCommMethodsSelected()}\n`;
+  const commNotes = document.getElementById("commMethodNotes") ? document.getElementById("commMethodNotes").value : "";
+  if (commNotes) text += `Communication Notes: ${commNotes}\n`;
+  const evalNeeded = document.getElementById("commEvalNeeded") ? document.getElementById("commEvalNeeded").value : "N/A";
+  text += `Evaluation Needed: ${evalNeeded}\n`;
+  const whyNot = document.getElementById("commEvalWhyNot") ? document.getElementById("commEvalWhyNot").value : "";
+  const barriers = document.getElementById("commEvalBarriers") ? document.getElementById("commEvalBarriers").value : "";
+  if (whyNot) text += `Reason (No Eval): ${whyNot}\n`;
+  if (barriers) text += `Communication Barriers: ${barriers}\n`;
+  text += `Communication Chart:\n${getCommChartNarrative()}\n\n`;
+
+  text += `3. LIKES & DISLIKES\n`;
+  text += `───────────────────────────────────────────────────────────────────\n\n`;
+  const likesActivities = document.getElementById("likesActivities") ? document.getElementById("likesActivities").value : "";
+  const likesFoods = document.getElementById("likesFoods") ? document.getElementById("likesFoods").value : "";
+  const likesPlaces = document.getElementById("likesPlaces") ? document.getElementById("likesPlaces").value : "";
+  const likesOther = document.getElementById("likesOther") ? document.getElementById("likesOther").value : "";
+  text += `LIKES:\nActivities/Hobbies: ${likesActivities || "N/A"}\n`;
+  text += `Favorite Foods: ${likesFoods || "N/A"}\n`;
+  text += `Favorite Places: ${likesPlaces || "N/A"}\n`;
+  if (likesOther) text += `Other Likes: ${likesOther}\n`;
+  const dislikesActivities = document.getElementById("dislikesActivities") ? document.getElementById("dislikesActivities").value : "";
+  const dislikesFoods = document.getElementById("dislikesFoods") ? document.getElementById("dislikesFoods").value : "";
+  const dislikesOther = document.getElementById("dislikesOther") ? document.getElementById("dislikesOther").value : "";
+  text += `\nDISLIKES:\nActivities/Situations: ${dislikesActivities || "N/A"}\n`;
+  text += `Foods Disliked: ${dislikesFoods || "N/A"}\n`;
+  if (dislikesOther) text += `Other Dislikes: ${dislikesOther}\n`;
+  text += `\n`;
+
+  text += `4. IMPORTANT PEOPLE IN THIS INDIVIDUAL'S LIFE\n`;
+  text += `───────────────────────────────────────────────────────────────────\n\n`;
+  text += getImportantPeopleNarrative() + `\n\n`;
+
+  text += `5. VISION FOR A GOOD LIFE\n`;
   text += `Personal Aspirations: ${getVal("aspirations") || "See personal vision statement."}\n`;
   text += `Previous Goals Progress: ${getVal("prevGoals") || "N/A"}\n`;
   text += `Strengths/Assets: ${getVal("strengths") || "N/A"}\n`;
   text += `Technology/Support: Tech (${getVal("techHelpers") || "None"}), Relationships (${getVal("relationships") || "None"})\n`;
   text += `Community Resources: ${getVal("communityResources") || "N/A"}\n\n`;
 
-  text += `3. HEALTH, SAFETY & RISK\n`;
+  text += `6. HEALTH, SAFETY & RISK\n`;
   text += `Medication/Diet/Mobility: ${getVal("medSupport") || "Standard per profile."}\n`;
   text += `Supervision: ${getVal("supervisionLevel")} | Risk Level: ${getVal("riskLevel")}\n`;
   text += `Behavioral Status: ${getVal("behavioralStatus")} | OSHA Precaution: ${getVal("oshaPrecaution")}\n`;
   text += `Evacuation/911 Plan: ${getVal("evacPlan") || "N/A"}\n\n`;
 
-  text += `4. LEGAL, RIGHTS & SATISFACTION\n`;
+  text += `7. LEGAL, RIGHTS & SATISFACTION\n`;
   text += `Status: ${getVal("legalStatus")} | Rights Brochure: ${getVal("rightsBrochure")} | Consents: ${getVal("consents")}\n`;
   text += `Service Satisfaction: ${getVal("serviceSatisfaction") || "N/A"}\n`;
   text += `Conflict of Interest Info: ${getVal("conflictInfo")}\n`;
   text += `Note: To file an anonymous complaint, contact the Office of Constituent Services at 1-800-364-9687.\n\n`;
 
-  text += `5. CONTRIBUTORS & ADMINISTRATION\n`;
+  text += `8. CONTRIBUTORS & ADMINISTRATION\n`;
   text += `Contributors: ${getVal("contributors") || "N/A"}\n`;
   text += `Participation: ${getVal("participation") || "N/A"}\n`;
   text += `SC Monitoring: ${getVal("scFrequency") || "N/A"}\n`;
   text += `Payee/Spending: ${getVal("payeeInfo") || "N/A"} | Burial: ${getVal("burialInfo") || "N/A"}\n\n`;
 
-  text += `6. MEASURABLE OUTCOMES\n`;
+  text += `9. MEASURABLE OUTCOMES\n`;
   if (getVal("domain")) {
     text += `The individual will receive ${getVal("verb")} ${getVal("goalTemplate")}.\n`;
     text += `Frequency: ${getVal("frequency") || "[FREQUENCY]"} | Monitoring: SC Quarterly & Provider Monthly.`;
@@ -356,6 +808,19 @@ function captureFormData() {
     const el = document.getElementById(id);
     if (el) formData[id] = el.value;
   });
+  // Capture ethnicity checkboxes
+  const boxes = document.querySelectorAll("#ethnicityGrid input[type=checkbox]");
+  formData._ethnicityChecked = Array.from(boxes)
+    .filter((cb) => cb.checked)
+    .map((cb) => cb.value);
+  // Capture legal reps
+  formData._legalReps = captureLegalReps();
+  // Capture communication method checkboxes
+  const commBoxes = document.querySelectorAll("#commMethodGrid input[type=checkbox]");
+  formData._commMethods = Array.from(commBoxes).filter(cb => cb.checked).map(cb => cb.value);
+  // Capture comm chart rows and important people
+  formData._commChartRows = JSON.parse(JSON.stringify(commChartRows));
+  formData._importantPeople = JSON.parse(JSON.stringify(importantPeople));
   return formData;
 }
 
@@ -367,6 +832,33 @@ function restoreFormData(formData) {
       el.value = formData[id];
     }
   });
+  // Restore ethnicity checkboxes
+  if (Array.isArray(formData._ethnicityChecked)) {
+    const boxes = document.querySelectorAll("#ethnicityGrid input[type=checkbox]");
+    boxes.forEach((cb) => {
+      cb.checked = formData._ethnicityChecked.includes(cb.value);
+    });
+    const otherChecked = formData._ethnicityChecked.includes("Other Ethnicity");
+    document.getElementById("ethnicityOtherGroup").style.display = otherChecked ? "" : "none";
+  }
+  // Restore legal reps
+  if (formData._legalReps) restoreLegalReps(formData._legalReps);
+  // Restore communication method checkboxes
+  if (Array.isArray(formData._commMethods)) {
+    const commBoxes = document.querySelectorAll("#commMethodGrid input[type=checkbox]");
+    commBoxes.forEach(cb => { cb.checked = formData._commMethods.includes(cb.value); });
+    const otherCb = Array.from(commBoxes).find(cb => cb.value === "Other Communication Method");
+    if (otherCb) document.getElementById("commMethodOtherGroup").style.display = otherCb.checked ? "" : "none";
+  }
+  // Restore comm chart and important people
+  if (Array.isArray(formData._commChartRows)) { commChartRows = formData._commChartRows; renderCommChart(); }
+  if (Array.isArray(formData._importantPeople)) { importantPeople = formData._importantPeople; renderImportantPeople(); }
+  // Re-run toggles so conditional fields show/hide correctly
+  toggleReligionOther();
+  toggleInsuranceFields();
+  toggleDentalOther();
+  toggleSignLangType();
+  toggleCommEvalFields();
   loadTemplates();
   updateUI();
 }

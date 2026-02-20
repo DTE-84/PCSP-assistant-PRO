@@ -107,7 +107,6 @@ body {
 /* ── Main Workspace ── */
 .main-workspace {
   padding: 40px;
-  overflow-y: auto;
   background: white;
 }
 
@@ -407,7 +406,30 @@ input:checked + .slider:before {
   display: block;
 }
 
-/* ── Sticky Individual Info Header ── */
+/* ── Subsection Labels within Form Sections ── */
+.subsection-label {
+  font-size: 11px;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--gold);
+  background: #f8f4ec;
+  border-left: 3px solid var(--gold);
+  padding: 6px 12px;
+  margin: 20px 0 14px 0;
+  border-radius: 0 4px 4px 0;
+}
+.subsection-label:first-of-type {
+  margin-top: 4px;
+}
+
+/* ── Multi-page / scrollable workspace ── */
+.main-workspace {
+  height: 100vh;
+  overflow-y: auto;
+}
+
+
 .individual-header {
   background: var(--marion-blue);
   color: white;
@@ -536,4 +558,80 @@ input:checked + .slider:before {
     margin: 1in;
     size: letter;
   }
+}
+
+/* ── Communication Method Grid ── */
+.comm-method-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 8px;
+  margin-top: 6px;
+}
+
+/* ── Ethnicity / Comm checkbox style ── */
+.eth-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-main);
+  text-transform: none;
+  letter-spacing: 0;
+  cursor: pointer;
+}
+.eth-check input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  padding: 0;
+  border: 2px solid var(--border);
+  border-radius: 3px;
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+/* ── Important Person & Legal Rep shared card style ── */
+.legal-rep-card {
+  background: var(--bg-light);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  padding: 16px;
+  margin-bottom: 12px;
+}
+.rep-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 14px;
+}
+.rep-title {
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--marion-blue);
+}
+.remove-rep-btn {
+  background: transparent;
+  border: none;
+  color: var(--danger);
+  cursor: pointer;
+  font-size: 16px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+.remove-rep-btn:hover {
+  background: #fdecea;
+}
+.add-rep-btn {
+  font-size: 12px;
+  padding: 8px 16px;
+  margin-top: 4px;
+}
+
+/* ── Ethnicity grid ── */
+.ethnicity-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 10px;
+  padding: 10px 0;
 }
