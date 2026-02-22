@@ -16,6 +16,7 @@
   --bg-light: #1a1a1a;
   --border: #333333;
   --text-main: #FFFFFF;
+  --text-label: #aaaaaa;
   --marion-blue: #4d94ff;
   --marion-blue-light: #66a3ff;
   --gold: #d4b47a;
@@ -100,6 +101,7 @@ body {
 
 [data-theme="dark"] .main-workspace {
   background: #121212;
+  color: #FFFFFF;
 }
 
 [data-theme="dark"] input,
@@ -146,7 +148,7 @@ body {
 }
 .resource-info {
   font-size: 11px;
-  color: #666;
+  color: var(--text-label, #666);
   margin-top: 4px;
   display: block;
 }
@@ -164,7 +166,7 @@ body {
 }
 .history-date {
   font-size: 10px;
-  color: #999;
+  color: var(--text-label, #999);
 }
 .history-title {
   font-weight: bold;
@@ -272,7 +274,7 @@ label {
   font-size: 11px;
   font-weight: 700;
   margin-bottom: 8px;
-  color: #666;
+  color: var(--text-label, #666);
   text-transform: uppercase;
 }
 input,
@@ -313,6 +315,22 @@ textarea:focus {
   font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
+  color: var(--text-main);
+}
+
+[data-theme="dark"] .tab-btn {
+  background: #2a2a2a;
+  color: #e0e0e0;
+}
+[data-theme="dark"] .tab-btn.active {
+  background: var(--marion-blue);
+  color: white;
+}
+[data-theme="dark"] .history-item {
+  border-bottom-color: #2a2a2a;
+}
+[data-theme="dark"] .history-title {
+  color: var(--marion-blue);
 }
 .tab-btn.active {
   background: var(--marion-blue);
@@ -367,7 +385,7 @@ textarea:focus {
 .btn-outline {
   background: transparent;
   border: 2px solid var(--border);
-  color: #666;
+  color: var(--text-main);
 }
 .btn:hover {
   opacity: 0.9;
