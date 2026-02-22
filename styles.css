@@ -10,18 +10,29 @@
   --text-main: #2c3e50;
   --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   --header-bg: #fff;
+  --text-label: #555;
 }
 
 [data-theme="dark"] {
-  --bg-light: #1a1a1a;
-  --border: #333333;
-  --text-main: #FFFFFF;
-  --text-label: #aaaaaa;
-  --marion-blue: #4d94ff;
-  --marion-blue-light: #66a3ff;
-  --gold: #d4b47a;
-  --shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
-  --header-bg: #1e1e1e;
+  /* Backgrounds */
+  --bg-light: #0f1117;
+  --header-bg: #1a1d27;
+  /* Borders */
+  --border: #2e3347;
+  /* Brand */
+  --marion-blue: #5b8dee;
+  --marion-blue-light: #7aa3f5;
+  --gold: #c9a84c;
+  --gold-light: #d4b47a;
+  /* Text hierarchy */
+  --text-main: #e8eaf0;
+  --text-label: #a0a8c0;
+  --text-heading: #c5cce0;
+  --text-muted: #5c6378;
+  /* States */
+  --success: #34c471;
+  --danger: #e05c6a;
+  --shadow: 0 4px 24px rgba(0, 0, 0, 0.6);
 }
 
 body {
@@ -94,47 +105,6 @@ body {
   transition: all 0.2s ease;
 }
 
-[data-theme="dark"] .form-section {
-  background: #1e1e1e;
-  border-color: #333;
-}
-
-[data-theme="dark"] .main-workspace {
-  background: #121212;
-  color: #FFFFFF;
-}
-
-[data-theme="dark"] input,
-[data-theme="dark"] select,
-[data-theme="dark"] textarea {
-  background: #2a2a2a;
-  color: #e0e0e0;
-  border-color: #444;
-}
-
-[data-theme="dark"] .output-section {
-  background: #1e1e1e;
-}
-
-[data-theme="dark"] #narrativeDisplay {
-  background: #2a2a2a;
-  color: #e0e0e0;
-  border-color: #444;
-}
-
-[data-theme="dark"] .individual-header {
-  background: #1e1e1e;
-  border-color: #333;
-}
-
-[data-theme="dark"] .history-item:hover {
-  background: #2d2d2d;
-}
-
-[data-theme="dark"] .privacy-banner {
-  background: #1a2a3a;
-  color: #4d94ff;
-}
 .resource-card:hover {
   border-color: var(--marion-blue);
   transform: translateY(-2px);
@@ -148,7 +118,7 @@ body {
 }
 .resource-info {
   font-size: 11px;
-  color: var(--text-label, #666);
+  color: var(--text-label);
   margin-top: 4px;
   display: block;
 }
@@ -166,7 +136,7 @@ body {
 }
 .history-date {
   font-size: 10px;
-  color: var(--text-label, #999);
+  color: var(--text-label);
 }
 .history-title {
   font-weight: bold;
@@ -274,7 +244,7 @@ label {
   font-size: 11px;
   font-weight: 700;
   margin-bottom: 8px;
-  color: var(--text-label, #666);
+  color: var(--text-label);
   text-transform: uppercase;
 }
 input,
@@ -315,22 +285,6 @@ textarea:focus {
   font-size: 12px;
   font-weight: 700;
   white-space: nowrap;
-  color: var(--text-main);
-}
-
-[data-theme="dark"] .tab-btn {
-  background: #2a2a2a;
-  color: #e0e0e0;
-}
-[data-theme="dark"] .tab-btn.active {
-  background: var(--marion-blue);
-  color: white;
-}
-[data-theme="dark"] .history-item {
-  border-bottom-color: #2a2a2a;
-}
-[data-theme="dark"] .history-title {
-  color: var(--marion-blue);
 }
 .tab-btn.active {
   background: var(--marion-blue);
@@ -385,7 +339,7 @@ textarea:focus {
 .btn-outline {
   background: transparent;
   border: 2px solid var(--border);
-  color: var(--text-main);
+  color: var(--text-label);
 }
 .btn:hover {
   opacity: 0.9;
@@ -654,7 +608,7 @@ input:checked + .slider:before {
 /* ── Communication Method Grid ── */
 .comm-method-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 8px;
   margin-top: 6px;
 }
@@ -670,10 +624,13 @@ input:checked + .slider:before {
   text-transform: none;
   letter-spacing: 0;
   cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
 }
 .eth-check input[type="checkbox"] {
   width: 16px;
   height: 16px;
+  min-width: 16px;
   padding: 0;
   border: 2px solid var(--border);
   border-radius: 3px;
@@ -722,7 +679,437 @@ input:checked + .slider:before {
 /* ── Ethnicity grid ── */
 .ethnicity-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
   gap: 10px;
   padding: 10px 0;
+}
+
+/* ════════════════════════════════════════════════════════════
+   DARK MODE — Consolidated component overrides
+   Color system:
+     Backgrounds:  #0f1117 → #1a1d27 → #1e2130 → #252838
+     Text:         #e8eaf0 (body) · #c5cce0 (headings) · #a0a8c0 (labels) · #5c6378 (muted)
+     Accent blue:  #5b8dee · Gold: #c9a84c
+   ════════════════════════════════════════════════════════════ */
+
+/* ── Page & workspace ── */
+[data-theme="dark"] .main-workspace {
+  background: #0f1117;
+  color: #e8eaf0;
+}
+
+/* ── Form cards ── */
+[data-theme="dark"] .form-section {
+  background: #1a1d27;
+  border-color: #2e3347;
+}
+
+/* ── ALL field labels (the uppercase topics above every input) ── */
+[data-theme="dark"] label {
+  color: #a0a8c0;
+}
+
+/* ── Section titles (e.g. "1 Demographics") ── */
+[data-theme="dark"] .section-title {
+  color: #c5cce0;
+  border-bottom-color: #c9a84c;
+}
+
+/* ── Subsection banner bars ── */
+[data-theme="dark"] .subsection-label {
+  background: #1e2130;
+  color: #c9a84c;
+  border-left-color: #c9a84c;
+}
+
+/* ── Inputs, selects, textareas ── */
+[data-theme="dark"] input,
+[data-theme="dark"] select,
+[data-theme="dark"] textarea {
+  background: #1e2130;
+  color: #e8eaf0;
+  border-color: #2e3347;
+}
+[data-theme="dark"] input:focus,
+[data-theme="dark"] select:focus,
+[data-theme="dark"] textarea:focus {
+  border-color: #5b8dee;
+  background: #252838;
+}
+[data-theme="dark"] input::placeholder,
+[data-theme="dark"] textarea::placeholder {
+  color: #5c6378;
+}
+
+/* ── Output / narrative area ── */
+[data-theme="dark"] .output-section {
+  background: #1a1d27;
+  border-color: #5b8dee;
+}
+[data-theme="dark"] #narrativeDisplay {
+  background: #1e2130;
+  color: #dde1ec;
+  border-color: #2e3347;
+}
+
+/* ── Side panels ── */
+[data-theme="dark"] .side-panel {
+  background: #1a1d27;
+  border-color: #2e3347;
+}
+[data-theme="dark"] .panel-content {
+  background: #1a1d27;
+}
+[data-theme="dark"] .resource-card {
+  background: #1e2130;
+  border-color: #2e3347;
+}
+[data-theme="dark"] .resource-card:hover {
+  border-color: #5b8dee;
+  background: #252838;
+}
+[data-theme="dark"] .resource-name {
+  color: #7aa3f5;
+}
+[data-theme="dark"] .resource-info {
+  color: #8b92a8;
+}
+
+/* ── History items ── */
+[data-theme="dark"] .history-item {
+  border-bottom-color: #2e3347;
+  color: #c5cce0;
+}
+[data-theme="dark"] .history-item:hover {
+  background: #252838;
+}
+[data-theme="dark"] .history-title {
+  color: #7aa3f5;
+}
+[data-theme="dark"] .history-date {
+  color: #5c6378;
+}
+
+/* ── Tabs ── */
+[data-theme="dark"] .tab-btn {
+  background: #1e2130;
+  color: #a0a8c0;
+}
+[data-theme="dark"] .tab-btn.active {
+  background: #5b8dee;
+  color: #ffffff;
+}
+
+/* ── Privacy banner ── */
+[data-theme="dark"] .privacy-banner {
+  background: #141b2d;
+  color: #7aa3f5;
+  border: 1px solid #2e3347;
+}
+
+/* ── Individual sticky header ── */
+[data-theme="dark"] .individual-header {
+  background: #1a1d27;
+  border-bottom-color: #c9a84c;
+  border-color: #2e3347;
+}
+
+/* ── Legal / rep cards ── */
+[data-theme="dark"] .legal-rep-card {
+  background: #1e2130;
+  border-color: #2e3347;
+}
+[data-theme="dark"] .rep-title {
+  color: #7aa3f5;
+}
+
+/* ── Outline button ── */
+[data-theme="dark"] .btn-outline {
+  border-color: #2e3347;
+  color: #a0a8c0;
+}
+[data-theme="dark"] .btn-outline:hover {
+  background: #252838;
+  color: #e8eaf0;
+}
+
+/* ── App header border ── */
+[data-theme="dark"] .app-header {
+  border-bottom-color: #2e3347;
+}
+
+/* ── Menu / hamburger ── */
+[data-theme="dark"] .menu-btn {
+  color: #7aa3f5;
+}
+[data-theme="dark"] .menu-btn:hover {
+  background: #1e2130;
+}
+
+/* ── Checkbox labels (eth-check, multi-option) ── */
+[data-theme="dark"] .eth-check,
+[data-theme="dark"] .multi-option {
+  color: #c5cce0;
+}
+
+/* ════════════════════════════════════════════════════════════
+   MULTI-OPTION checkboxes (learning styles, health params, etc.)
+   ════════════════════════════════════════════════════════════ */
+.multi-option {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-main);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.multi-option input[type="checkbox"] {
+  width: 16px;
+  height: 16px;
+  min-width: 16px;
+  padding: 0;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+.multi-option span {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* ════════════════════════════════════════════════════════════
+   MULTI-SELECT CONTAINERS (Learning Styles / Legal Roles / Health Params)
+   ════════════════════════════════════════════════════════════ */
+.multi-select-container {
+  position: relative;
+}
+.multi-select-display {
+  min-height: 44px;
+  border: 2px solid #edf2f7;
+  border-radius: 8px;
+  padding: 6px 10px;
+  cursor: pointer;
+  background: var(--header-bg);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px;
+  transition: border-color 0.2s;
+}
+.multi-select-display:hover {
+  border-color: var(--marion-blue);
+}
+.multi-select-container.active .multi-select-dropdown {
+  display: flex;
+}
+
+/* Dropdown panel — flex-wrap so items size to content */
+.multi-select-dropdown {
+  display: none;
+  position: absolute;
+  top: calc(100% + 4px);
+  left: 0;
+  z-index: 200;
+  background: var(--header-bg);
+  border: 2px solid var(--border);
+  border-radius: 8px;
+  padding: 10px 12px;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+  box-shadow: var(--shadow);
+  max-height: 280px;
+  overflow-y: auto;
+  min-width: 100%;
+  width: max-content;
+  max-width: min(560px, 90vw);
+}
+.multi-select-dropdown .multi-option {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-main);
+  cursor: pointer;
+  white-space: nowrap;
+  padding: 4px 2px;
+}
+.multi-select-dropdown .multi-option input[type="checkbox"] {
+  width: 15px;
+  height: 15px;
+  min-width: 15px;
+  flex-shrink: 0;
+  cursor: pointer;
+  accent-color: var(--marion-blue);
+}
+.multi-select-dropdown .multi-option:hover {
+  color: var(--marion-blue);
+}
+
+[data-theme="dark"] .multi-select-display {
+  border-color: #2e3347;
+  background: #1e2130;
+}
+[data-theme="dark"] .multi-select-dropdown {
+  background: #1a1d27;
+  border-color: #2e3347;
+}
+[data-theme="dark"] .multi-select-dropdown .multi-option {
+  color: #c5cce0;
+}
+[data-theme="dark"] .multi-select-dropdown .multi-option:hover {
+  color: #7aa3f5;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SELECTED TAG PILLS (inside multi-select display)
+   ════════════════════════════════════════════════════════════ */
+.selected-tag {
+  display: inline-flex;
+  align-items: center;
+  background: var(--marion-blue);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 9px;
+  border-radius: 12px;
+  margin: 2px 3px 2px 0;
+  white-space: nowrap;
+}
+[data-theme="dark"] .selected-tag {
+  background: #2d4a7a;
+  color: #c5d8ff;
+}
+.placeholder {
+  color: var(--text-label);
+  font-style: italic;
+  font-size: 13px;
+}
+
+/* ════════════════════════════════════════════════════════════
+   SECTION COMPLETION INDICATOR DOT
+   ════════════════════════════════════════════════════════════ */
+.section-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--border);
+  margin-left: auto;
+  flex-shrink: 0;
+  transition: background 0.3s;
+}
+
+/* ════════════════════════════════════════════════════════════
+   DRAG-AND-DROP OVERLAY
+   ════════════════════════════════════════════════════════════ */
+.main-workspace.drag-over::after {
+  content: "Drop .pcsp file to open";
+  position: fixed;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 51, 102, 0.82);
+  color: #fff;
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  z-index: 9998;
+  pointer-events: none;
+}
+[data-theme="dark"] .main-workspace.drag-over::after {
+  background: rgba(10, 15, 30, 0.88);
+  color: #7aa3f5;
+}
+
+/* ════════════════════════════════════════════════════════════
+   PRINT STYLESHEET — HIPAA confidentiality footer on every page
+   ════════════════════════════════════════════════════════════ */
+@media print {
+  /* Hide UI chrome */
+  .side-panel,
+  .app-header,
+  .privacy-banner,
+  .btn-bar,
+  .btn,
+  .individual-header,
+  #toast,
+  .sidebar-overlay,
+  p[style*="drag"],
+  .form-section,
+  .output-section > .section-title {
+    /* form sections hidden — only narrative prints */
+  }
+
+  /* Show only the narrative output */
+  .app-container { display: block !important; }
+  .side-panel    { display: none !important; }
+  .app-header,
+  .privacy-banner { display: none !important; }
+  .btn-bar        { display: none !important; }
+  .individual-header { display: none !important; }
+  .form-section   { display: none !important; }
+  .output-section {
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  #narrativeDisplay {
+    font-family: "Courier New", monospace;
+    font-size: 11pt;
+    white-space: pre-wrap;
+    border: none !important;
+    padding: 0 !important;
+    background: white !important;
+    color: black !important;
+  }
+
+  /* HIPAA confidentiality footer on every printed page */
+  @page {
+    margin: 1in 0.75in;
+    @bottom-center {
+      content: "CONFIDENTIAL — HIPAA Protected Health Information (45 CFR Parts 160 & 164) | Marion County DMH | Unauthorized disclosure is prohibited";
+      font-size: 8pt;
+      color: #555;
+    }
+  }
+
+  /* Page breaks between major sections */
+  #narrativeDisplay { page-break-inside: auto; }
+}
+
+/* ════════════════════════════════════════════════════════════
+   GOAL CARDS (Section 9 multi-goal)
+   ════════════════════════════════════════════════════════════ */
+#goalsContainer .legal-rep-card {
+  border-left: 3px solid var(--gold);
+}
+#goalsContainer .rep-title {
+  color: var(--gold) !important;
+}
+
+/* ════════════════════════════════════════════════════════════
+   ACCESSIBILITY — focus ring for keyboard navigation
+   ════════════════════════════════════════════════════════════ */
+:focus-visible {
+  outline: 2px solid var(--marion-blue);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: none; /* handled by existing border-color transition */
+}
+
+/* ════════════════════════════════════════════════════════════
+   EXPIRY WARNING in history panel
+   ════════════════════════════════════════════════════════════ */
+.history-date [style*="var(--danger)"] {
+  font-weight: 700;
 }
