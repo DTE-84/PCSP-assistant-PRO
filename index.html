@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>PCSP Assistant Pro | Marion County DMH</title>
+    <meta name="description" content="Person Centered Service Plan assistant for Marion County Division of Developmental Disabilities, Missouri." />
+    <meta name="robots" content="noindex, nofollow" />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -45,10 +47,12 @@
               id="themeToggle"
               onclick="toggleTheme()"
               title="Toggle Dark/Light Mode"
+              aria-label="Toggle dark and light mode"
               style="padding: 8px 12px; font-size: 18px;"
             >
               🌓
             </button>
+            <span id="autoSaveIndicator" style="font-size:11px;font-weight:600;color:var(--success);opacity:0;transition:opacity 0.5s;white-space:nowrap;align-self:center;">✓ Auto-saved</span>
             <button class="btn btn-outline" onclick="resetForm()">
               New Plan
             </button>
@@ -863,7 +867,7 @@
             </label>
           </div>
           <div id="commChartContainer">
-            <p style="font-size: 12px; color: #999; margin: 8px 0 12px">
+            <p style="font-size: 12px; color: var(--text-label); margin: 8px 0 12px">
               No communication entries added. Click below to add one.
             </p>
             <textarea id="commChartAttached" placeholder="See Attached (Optional notes...)" oninput="updateUI()"></textarea>
@@ -957,13 +961,13 @@
           <div class="section-title">
             <span>4</span> Important People
           </div>
-          <p style="font-size: 13px; color: #666; margin: 0 0 16px">
+          <p style="font-size: 13px; color: var(--text-label); margin: 0 0 16px">
             List family members, friends, staff, and others who are meaningful
             to this individual. Include what they enjoy doing together and how
             often.
           </p>
           <div id="importantPeopleContainer">
-            <p style="font-size: 12px; color: #999; margin: 8px 0 12px">
+            <p style="font-size: 12px; color: var(--text-label); margin: 8px 0 12px">
               No people added yet. Click below to add someone important to this
               individual.
             </p>
@@ -1335,7 +1339,7 @@
                 <textarea id="dpMonitoring" placeholder="Who documents? Where is data kept? Frequency? Review dates by SC." oninput="updateUI()"></textarea>
               </div>
             </div>
-            <p style="font-size: 11px; color: #666; font-style: italic; margin-top: 10px; border-left: 3px solid var(--gold); padding-left: 10px;">
+            <p style="font-size: 11px; color: var(--text-label); font-style: italic; margin-top: 10px; border-left: 3px solid var(--gold); padding-left: 10px;">
               Compliance Note: Plan must include assurance that interventions cause no harm and information regarding the right to appeal to the Office of Constituent Services.
             </p>
           </div>
@@ -1347,6 +1351,25 @@
             <span>8</span> Contributors & Administration
           </div>
           <div class="form-grid">
+            <div class="field-group">
+              <label>Plan Effective Date</label>
+              <input type="date" id="planEffectiveDate" oninput="updateUI()" />
+            </div>
+            <div class="field-group">
+              <label>Annual Review Due Date</label>
+              <input type="date" id="planReviewDate" oninput="updateUI()" />
+            </div>
+            <div class="field-group">
+              <label>Waiver Type</label>
+              <select id="waiverType" onchange="updateUI()">
+                <option value="Non-Waivered">Non-Waivered / General Revenue</option>
+                <option value="CDS Waiver">CDS Waiver (Community Support)</option>
+                <option value="Missouri Children's Waiver">Missouri Children's Waiver</option>
+                <option value="Partnership for Hope">Partnership for Hope Waiver</option>
+                <option value="Comprehensive Waiver">Comprehensive DD Waiver</option>
+                <option value="ICF/IID">ICF/IID</option>
+              </select>
+            </div>
             <div class="field-group full">
               <label>Plan Contributors (Who was involved?)</label>
               <input
@@ -1399,51 +1422,10 @@
           <div class="section-title">
             <span>9</span> Measurable Outcomes Generator
           </div>
-          <div class="form-grid">
-            <div class="field-group">
-              <label>Outcome Domain</label>
-              <select id="domain" onchange="loadTemplates()">
-                <option value="">-- Select --</option>
-                <option value="Safety">Safety & Security</option>
-                <option value="Daily">Daily Life & Employment</option>
-                <option value="Community">Community Living</option>
-                <option value="Health">Healthy Living</option>
-              </select>
-            </div>
-            <div class="field-group">
-              <label>Support Method</label>
-              <select id="verb" onchange="updateUI()">
-                <option value="instructional support to learn how to">
-                  Instructional (Teaching)
-                </option>
-                <option value="maintenance support to continue to">
-                  Maintenance (Sharpness)
-                </option>
-                <option value="physical and direct support to">
-                  Physical/Direct (Hands-on)
-                </option>
-                <option value="modeling and demonstration to">
-                  Model (Show/Tell)
-                </option>
-                <option value="verbal prompts and cues to">
-                  Prompt (Reminders)
-                </option>
-              </select>
-            </div>
-            <div class="field-group">
-              <label>Frequency</label>
-              <input
-                type="text"
-                id="frequency"
-                placeholder="e.g. 3x weekly"
-                oninput="updateUI()"
-              />
-            </div>
-            <div class="field-group full">
-              <label>Goal Starter (Clinical Building Blocks)</label>
-              <select id="goalTemplate" onchange="updateUI()"></select>
-            </div>
-          </div>
+          <div id="goalsContainer"></div>
+          <button class="btn btn-outline" type="button" onclick="addGoal()" style="margin-top:4px;">
+            + Add Outcome Goal
+          </button>
         </div>
 
         <!-- ── PCSP Document Preview & Export ── -->
@@ -1484,6 +1466,9 @@
               />
             </label>
           </div>
+          <p style="font-size:11px;color:var(--text-label);margin-top:10px;text-align:center;">
+            💡 You can also drag &amp; drop a <strong>.pcsp</strong> file anywhere onto this page to open it.
+          </p>
         </div>
       </main>
 
