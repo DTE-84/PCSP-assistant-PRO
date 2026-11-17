@@ -79,6 +79,8 @@ const FORM_FIELDS = [
   "behavioralStatus","oshaPrecaution","allergies",
   // Section 7 — Legal & Rights
   "limitedGuardianshipDetails","rightsBrochure","consents",
+  "sdsStatus","sdsEorRelationship","sdsEorName","sdsEorPhone","sdsFms",
+  "sdsServices","sdsBackupPlan",
   "serviceSatisfaction","conflictInfo",
   "dpInvitation","dpDescription","dpLessIntrusive","dpHistorical",
   "dpTeaching","dpLiftingCriteria","dpMonitoring",
@@ -142,6 +144,54 @@ function toggleTheme() {
 function toggleDueProcess(cb) {
   document.getElementById("dueProcessFields").style.display = cb.checked ? "none" : "";
   updateUI();
+}
+
+// ─────────────────────────────────────────────
+//  7A — SELF-DIRECTED SUPPORTS (SDS)
+//  The employer of record is often NOT the individual
+//  (e.g. a parent when the individual is under 18), so
+//  the name is typed in. "Self" fills it from the
+//  individual's legal name.
+// ─────────────────────────────────────────────
+function toggleSDS() {
+  const on = document.getElementById("sdsStatus").value === "Yes";
+  document.getElementById("sdsFields").style.display = on ? "" : "none";
+  syncEmployerOfRecord(false);
+}
+
+function syncEmployerOfRecord(relationshipChanged) {
+  _applyEmployerOfRecord(relationshipChanged);
+  updateUI();
+}
+
+function _applyEmployerOfRecord(relationshipChanged) {
+  const rel     = document.getElementById("sdsEorRelationship");
+  const eorName = document.getElementById("sdsEorName");
+  const client  = document.getElementById("clientName").value;
+  if (!rel || !eorName) return;
+
+  if (rel.value === "Self") {
+    eorName.value    = client;
+    eorName.readOnly = true;
+  } else {
+    // Switching away from Self: clear the individual's name so the
+    // actual employer of record can be typed in.
+    if (relationshipChanged && eorName.readOnly && eorName.value === client) eorName.value = "";
+    eorName.readOnly = false;
+    if (relationshipChanged) eorName.focus();
+  }
+
+  // Under-18 reminder
+  const dob  = document.getElementById("clientDOB").value;
+  const note = document.getElementById("sdsMinorNote");
+  if (note) note.style.display = (dob && rel.value === "Self" && _ageFromDOB(dob) < 18) ? "" : "none";
+}
+
+function _ageFromDOB(dob) {
+  const d = new Date(dob + "T00:00:00"), now = new Date();
+  let age = now.getFullYear() - d.getFullYear();
+  if (now < new Date(now.getFullYear(), d.getMonth(), d.getDate())) age--;
+  return age;
 }
 
 // ─────────────────────────────────────────────
@@ -236,12 +286,12 @@ function toggleCommChartNA(cb) {
         return;
       }
     }
-    btn.disabled = true;
-    attached.disabled = true;
-    attached.value = "";
+    if (btn) btn.disabled = true;
+    if (attached) { attached.disabled = true;
+    attached.value = ""; }
   } else {
-    btn.disabled = false;
-    attached.disabled = false;
+    if (btn) btn.disabled = false;
+    if (attached) attached.disabled = false;
   }
   updateUI();
 }
@@ -861,6 +911,7 @@ function updateSectionIndicators() {
 // ─────────────────────────────────────────────
 function updateUI() {
   scheduleAutoSave();
+  _applyEmployerOfRecord(false); // keep "Self" EOR in step with the legal name
 
   const isPrivacyOn = document.getElementById("privacyToggle").checked;
   const getVal = (id) => { const el = document.getElementById(id); return el ? el.value : ""; };
@@ -1061,6 +1112,20 @@ function updateUI() {
   field("Consents on File",               getVal("consents"));
   field("Service Satisfaction",           getVal("serviceSatisfaction"));
   field("Conflict of Interest Info",      getVal("conflictInfo"));
+  line("");
+  t += "Self-Directed Supports (SDS): ";
+  if (getVal("sdsStatus") !== "Yes") {
+    t += "Not self-directing.\n";
+  } else {
+    t += "Yes\n";
+    const eorRel  = getVal("sdsEorRelationship");
+    const eorName = isPrivacyOn ? "[EMPLOYER OF RECORD]" : getVal("sdsEorName");
+    field("  Employer of Record", eorName ? `${eorName} (${eorRel === "Self" ? "Self" : eorRel})` : "");
+    if (getVal("sdsEorPhone")) field("  EOR Phone", isPrivacyOn ? "[PHONE]" : getVal("sdsEorPhone"));
+    field("  Fiscal Management Service",    getVal("sdsFms"));
+    field("  Self-Directed Services",       getVal("sdsServices"));
+    field("  Backup Plan",                  getVal("sdsBackupPlan"));
+  }
   line("");
   t += "Rights Limitations & Due Process: ";
   if (document.getElementById("dueProcessNA").checked) {
@@ -1316,6 +1381,7 @@ function restoreFormData(fd) {
   if (pLangNA) { pLangNA.checked = !!fd._commPrimaryLanguageNA; toggleNAField("commPrimaryLanguage","commPrimaryLanguageNA"); }
 
   // Re-run all conditional toggles
+  toggleSDS();
   toggleReligionOther();
   toggleInsuranceFields();
   toggleDentalOther();
