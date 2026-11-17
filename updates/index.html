@@ -1299,6 +1299,82 @@
             </div>
           </div>
 
+          <!-- 7A: Self-Directed Supports (SDS) -->
+          <div class="subsection-label" style="margin-top: 24px;">
+            Self-Directed Supports (SDS)
+          </div>
+          <div class="form-grid">
+            <div class="field-group">
+              <label>Self-Directed Supports?</label>
+              <select id="sdsStatus" onchange="toggleSDS()">
+                <option value="No">No - Not self-directing</option>
+                <option value="Yes">Yes - Receives SDS</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="sdsFields" style="display: none;">
+            <div class="form-grid">
+              <div class="field-group">
+                <label>Employer of Record Is</label>
+                <select id="sdsEorRelationship" onchange="syncEmployerOfRecord(true)">
+                  <option value="Self">The Individual (Self)</option>
+                  <option value="Parent">Parent</option>
+                  <option value="Guardian">Legal Guardian</option>
+                  <option value="Other Family Member">Other Family Member</option>
+                  <option value="Designated Representative">Designated Representative</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+              <div class="field-group">
+                <label>Employer of Record Name</label>
+                <input
+                  type="text"
+                  id="sdsEorName"
+                  placeholder="Type the employer of record's full name"
+                  oninput="updateUI()"
+                />
+              </div>
+              <div class="field-group">
+                <label>Employer of Record Phone</label>
+                <input
+                  type="tel"
+                  id="sdsEorPhone"
+                  placeholder="(573) 555-0100"
+                  oninput="updateUI()"
+                />
+              </div>
+              <div class="field-group">
+                <label>Fiscal Management Service (FMS)</label>
+                <input
+                  type="text"
+                  id="sdsFms"
+                  placeholder="FMS agency name"
+                  oninput="updateUI()"
+                />
+              </div>
+              <div class="field-group full">
+                <label>Self-Directed Services &amp; Units</label>
+                <textarea
+                  id="sdsServices"
+                  placeholder="E.g. Personal Assistant - 20 hrs/week; Community Specialist - 4 hrs/month"
+                  oninput="updateUI()"
+                ></textarea>
+              </div>
+              <div class="field-group full">
+                <label>SDS Backup Plan</label>
+                <textarea
+                  id="sdsBackupPlan"
+                  placeholder="Who covers if the hired employee is unavailable?"
+                  oninput="updateUI()"
+                ></textarea>
+              </div>
+            </div>
+            <p id="sdsMinorNote" style="display: none; font-size: 11px; color: var(--text-label); font-style: italic; margin-top: 10px; border-left: 3px solid var(--gold); padding-left: 10px;">
+              Note: This individual is under 18, so the employer of record is usually a parent or guardian, not the individual.
+            </p>
+          </div>
+
           <!-- 7B: Due Process & Rights Limitations -->
           <div class="subsection-label" style="display: flex; justify-content: space-between; align-items: center; margin-top: 24px;">
             Rights Limitations &amp; Due Process
