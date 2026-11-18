@@ -226,7 +226,7 @@ body {
 
 .form-grid {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 20px;
 }
 .field-group {
@@ -507,42 +507,187 @@ input:checked + .slider:before {
   color: white;
 }
 
-/* ── Responsive ── */
+/* ════════════════════════════════════════════════════════════
+   RESPONSIVE LAYOUT
+     Desktop  ≥ 1440px : full 3-column layout (defaults above)
+     Laptop   1025–1439: narrower side panels, tighter padding
+     Tablet    769–1024: single workspace column, both panels
+                         become slide-out drawers
+     Phone       ≤ 768 : one field per row, compact chrome,
+                         touch-friendly controls
+   ════════════════════════════════════════════════════════════ */
+
+/* Drafts button only appears once the right panel becomes a drawer */
+.drafts-btn {
+  display: none;
+}
+
+/* ── Laptop ── */
+@media (max-width: 1439px) and (min-width: 1025px) {
+  .app-container {
+    grid-template-columns: 250px minmax(0, 1fr) 250px;
+  }
+  .app-container.sidebar-collapsed {
+    grid-template-columns: 0px minmax(0, 1fr) 250px;
+  }
+  .main-workspace {
+    padding: 28px;
+  }
+  .form-section {
+    padding: 20px;
+  }
+  .form-grid {
+    gap: 16px;
+  }
+}
+
+/* ── Tablet (and smaller) ── */
 @media (max-width: 1024px) {
   .app-container {
-    grid-template-columns: 0px 1fr;
+    /* Side panels are position:fixed here, so the workspace is the only
+       grid item and must get the full width. */
+    grid-template-columns: minmax(0, 1fr);
   }
-  .side-panel:first-child {
+  .side-panel:first-child,
+  .side-panel.right {
     position: fixed;
     top: 0;
-    left: 0;
     bottom: 0;
-    width: 280px;
-    transform: translateX(-100%);
+    width: min(320px, 85vw);
     visibility: hidden;
     z-index: 2000;
+    box-shadow: var(--shadow);
   }
-  .sidebar-active .side-panel:first-child {
+  .side-panel:first-child {
+    left: 0;
+    transform: translateX(-100%);
+  }
+  .side-panel.right {
+    right: 0;
+    transform: translateX(100%);
+  }
+  .sidebar-active .side-panel:first-child,
+  .drafts-active .side-panel.right {
     transform: translateX(0);
     visibility: visible;
   }
-  .side-panel.right {
-    display: none;
+  .drafts-active .sidebar-overlay {
+    display: block;
+  }
+  .drafts-btn {
+    display: flex;
+  }
+  .main-workspace {
+    padding: 24px;
   }
   .form-grid {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .field-group.full {
+    grid-column: span 2;
+  }
+  .field-group.half {
+    grid-column: span 2;
+  }
+  /* Touch: larger tap targets in drawers */
+  .history-item {
+    padding: 14px 12px;
+  }
+  .history-item button {
+    min-width: 40px;
+    min-height: 40px;
   }
 }
+
+/* ── Phone ── */
 @media (max-width: 768px) {
+  .main-workspace {
+    padding: 16px;
+  }
+  .individual-header {
+    gap: 4px 16px;
+    padding: 8px 16px;
+    font-size: 12px;
+  }
+  .individual-header .ind-name {
+    flex-basis: 100%;
+  }
+  .app-header {
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+    padding-bottom: 14px;
+    gap: 10px;
+  }
+  .app-header h1 {
+    font-size: 20px;
+  }
+  .app-header .btn-bar {
+    gap: 8px;
+  }
+  .app-header .btn {
+    padding: 8px 12px;
+  }
+  .privacy-banner {
+    gap: 12px;
+    padding: 12px 14px;
+    font-size: 12px;
+  }
+  .form-section {
+    padding: 16px;
+    margin-bottom: 24px;
+  }
+  .section-title {
+    font-size: 13px;
+    letter-spacing: 1px;
+  }
   .form-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 14px;
   }
   .field-group.full,
   .field-group.half {
     grid-column: span 1;
   }
-  .main-workspace {
-    padding: 20px;
+  /* 16px stops iOS Safari from zooming in on focus */
+  input,
+  select,
+  textarea {
+    font-size: 16px;
+    min-width: 0;
+    max-width: 100%;
+    box-sizing: border-box;
+  }
+  .field-group {
+    min-width: 0;
+  }
+  .comm-method-grid,
+  .ethnicity-grid {
+    grid-template-columns: 1fr;
+  }
+  .eth-check,
+  .multi-option {
+    white-space: normal;
+    min-height: 36px;
+  }
+  .multi-select-dropdown {
+    width: auto;
+    max-width: 100%;
+    right: 0;
+  }
+  .output-section {
+    padding: 16px;
+  }
+  .btn-bar .btn {
+    flex: 1 1 auto;
+  }
+  .toast {
+    left: 16px;
+    right: 16px;
+    bottom: 16px;
+    text-align: center;
+  }
+  .main-workspace.drag-over::after {
+    font-size: 20px;
   }
 }
 
