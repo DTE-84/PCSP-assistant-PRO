@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <div class="sidebar-overlay" onclick="toggleSidebar()"></div>
+    <div class="sidebar-overlay" onclick="closeDrawers()"></div>
     <div class="app-container" id="appContainer">
       <!-- ── Left Sidebar: Marion County Resources ── -->
       <aside class="side-panel">
@@ -42,6 +42,14 @@
             </h1>
           </div>
           <div class="btn-bar">
+            <button
+              class="btn btn-outline drafts-btn"
+              onclick="toggleDrafts()"
+              title="Saved Drafts"
+              aria-label="Open saved drafts"
+            >
+              📁 Drafts
+            </button>
             <button
               class="btn btn-outline"
               id="themeToggle"

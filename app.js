@@ -752,11 +752,28 @@ function initDragDrop() {
 function toggleSidebar() {
   const container = document.getElementById("appContainer");
   if (window.innerWidth <= 1024) {
+    document.body.classList.remove("drafts-active");
     document.body.classList.toggle("sidebar-active");
   } else {
     container.classList.toggle("sidebar-collapsed");
   }
 }
+
+// Saved Drafts drawer (tablet / phone only — on desktop it's always visible)
+function toggleDrafts() {
+  document.body.classList.remove("sidebar-active");
+  document.body.classList.toggle("drafts-active");
+}
+
+function closeDrawers() {
+  document.body.classList.remove("sidebar-active", "drafts-active");
+}
+
+// Leaving drawer mode (e.g. rotating a tablet to landscape) shouldn't
+// leave a stale overlay behind.
+window.addEventListener("resize", () => {
+  if (window.innerWidth > 1024) closeDrawers();
+});
 
 // ─────────────────────────────────────────────
 //  RENDER RESOURCE CARDS
@@ -1394,6 +1411,7 @@ function viewDraft(id) {
     if (draft.formData) restoreFormData(draft.formData);
     else document.getElementById("narrativeDisplay").innerText = draft.text;
     _hasUnsavedChanges = false;
+    closeDrawers();
   }
 }
 
